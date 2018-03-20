@@ -82,14 +82,14 @@ li {
 }
 
 
-h1 {
+.form h1 {
   text-align:center;
   color:$white;
   font-weight:$thin;
-  margin:0 0 40px;
+  margin:0 0 20px;
 }
 
-label {
+.form label {
   position:absolute;
   transform:translateY(6px);
   left:13px;
@@ -104,7 +104,7 @@ label {
   }
 }
 
-label.active {
+.form label.active {
   transform:translateY(50px);
   left:2px;
   font-size:14px;
@@ -113,11 +113,11 @@ label.active {
   }
 }
 
-label.highlight {
+.form label.highlight {
 	color:$white;
 }
 
-input, textarea {
+.form input, textarea {
   font-size:22px;
   display:block;
   width:100%;
@@ -135,17 +135,17 @@ input, textarea {
   }
 }
 
-textarea {
+.form textarea {
   border:2px solid $gray-light;
   resize: vertical;
 }
 
-.field-wrap {
+.form .field-wrap {
   position:relative;
   margin-bottom:15px;
 }
 
-.top-row {
+.form .top-row {
   &:after {
     content: "";
     display: table;
@@ -162,7 +162,7 @@ textarea {
   }
 }
 
-.button {
+.form .button {
   border:0;
   cursor: pointer;
   outline:none;
@@ -181,12 +181,12 @@ textarea {
   }
 }
 
-.button-block {
+.form .button-block {
   display:block;
   width:100%;
 }
 
-.forgot {
+.form .forgot {
   margin-top:-20px;
   text-align:right;
 }
@@ -199,11 +199,26 @@ textarea {
   text-align: center;
   background: #ffffff;
   padding: 8px;
+  padding-top: 2px;
+  padding-bottom: 2px;
   border-radius: 3px;
   color: #700;
   margin: auto;
   margin-top: 5px;
   font-weight: bold;
+}
+
+.error-event {
+  display: block;
+  font-family: Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;
+  width: 70%;
+  text-align: center;
+  padding: 8px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 3px;
+  margin: auto;
+  margin-top: 5px;
 }
 
 .errorLogin {

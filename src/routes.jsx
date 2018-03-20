@@ -1,21 +1,35 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
-  Route
+  BrowserRouter,
+  Route,
+  Switch
 } from 'react-router-dom';
-import App from './app';
-import About from './components/About';
-import Sample from './components/Sample';
+
+//import App from './app';
+import Admin from './components/Admin';
+import Notfound from './components/Notfound';
+import LSForm from './components/LSForm';
+import ProtectedRoute from './components/ProtectedRoute';
+
+import Homepage from './components/Homepage';
+import Addevent from './components/Addevent';
+
 import 'styles/index.scss';
+import 'normalize.css';
+
 
 const Routes = () => (
-  <Router>
-    <div>
-      <Route exact path="/" component={App}/>
-      <Route path="/about" component={About}/>
-      <Route path="/sample" component={Sample}/>
-    </div>
-  </Router>
+  <BrowserRouter>
+
+      <Switch>
+          <Route exact path="/" component={LSForm}/>
+          <Route path="/admin" component={Admin}/>
+          <ProtectedRoute path="/homepage" component={Homepage}/>
+          <ProtectedRoute path="/addevent" component={Addevent}/>
+          <Route path="*" component={Notfound}/>
+      </Switch>
+
+  </BrowserRouter>
 );
 
-export default Routes;
+export default Routes ;

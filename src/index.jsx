@@ -1,7 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import {AppContainer} from 'react-hot-loader'
-import Routes from './routes'
+import React from 'react';
+import ReactDOM from 'react-dom';
+//import {AppContainer} from 'react-hot-loader';
+import Routes from './routes';
+
+//import { BrowserRouter } from 'react-router-dom';//Обертка для App для роутинга
 
 // let users = [
 //   {
@@ -28,22 +30,27 @@ import Routes from './routes'
 // localStorage.setItem('Users', usersJSON);
 // console.log( JSON.parse( localStorage.getItem('Users') ) );
 
+import { Provider } from 'react-redux';
+import store from './reducers/reducer';
+
 ReactDOM.render(
-  <AppContainer>
+    <Provider store={store}>
       <Routes />
-  </AppContainer>,
+    </Provider>,
   document.getElementById('app')
 );
 
-// Hot Module Replacement API
-if (module.hot) {
-  module.hot.accept('./app', () => {
-    const NextApp = require('./app').default;
-    ReactDOM.render(
-      <AppContainer>
-        <NextApp/>
-      </AppContainer>,
-      document.getElementById('app')
-    );
-  });
-}
+// // Hot Module Replacement API
+// if (module.hot) {
+//   module.hot.accept('./app', () => {
+//     const NextApp = require('./app').default;
+//     ReactDOM.render(
+//       <AppContainer>
+//
+//           <NextApp/>
+//
+//       </AppContainer>,
+//       document.getElementById('app')
+//     );
+//   });
+// }

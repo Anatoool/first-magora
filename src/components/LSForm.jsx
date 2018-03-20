@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 
+import '../../styles/login.scss';
+
 class LSForm extends Component {
 
   constructor(props) {
