@@ -19,8 +19,6 @@ class Homepage extends Component {
       <div>
         <UserHeader login={this.props.login} page="homepage"/>
         <UserEventsTable />
-        Hello User
-        <div onClick = {this.AjaxTest.bind(this)}>Запрос</div>
       </div>
     );
   }

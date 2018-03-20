@@ -40,7 +40,7 @@ class UserEventsTable extends Component {
              <td>{el.name}</td>
              <td>{el.description}</td>
              <td>{el.importance}</td>
-             <td>{el.type}</td>
+             <td>{el.place}</td>
              <td>{el.date_start}</td>
              <td>{el.date_end}</td>
            </tr>);
@@ -64,7 +64,7 @@ class UserEventsTable extends Component {
                     <th scope="col">Название</th>
                     <th scope="col">Описание</th>
                     <th scope="col">Важность</th>
-                    <th scope="col">Тип события</th>
+                    <th scope="col">Место</th>
                     <th scope="col">Дата начала</th>
                     <th scope="col">Дата окончания</th>
                   </tr>

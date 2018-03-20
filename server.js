@@ -6,6 +6,7 @@ import { addUser, findUser } from './database/db';
 
 import getRoleFromToken from './server/middleware/getRoleFromToken';
 import userGetEvents from './server/middleware/userGetEvents';
+import userAddEvent from './server/middleware/userAddEvent';
 
 import preLaunch from './server/preLaunch';
 preLaunch();
@@ -75,6 +76,11 @@ app.use('/user/events/get', userGetEvents);
 app.post('/user/events/get', (req, res) => {
 
 });
+
+app.use('/user/event/add', userAddEvent);
+app.post('/user/event/add', (req, res) => {
+});
+
 
 app.listen(port);
 console.log(`server started on port ${port}`);

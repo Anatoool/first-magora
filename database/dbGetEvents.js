@@ -1,21 +1,12 @@
 import mongoose from 'mongoose';
 
-var Schema = mongoose.Schema;
+import eventScheme from './schemes/eventScheme';
+
 // для работы с promise
 mongoose.Promise = global.Promise;
 
 // установка схемы
-var eventScheme = new Schema({
-    user: String,
-    name: String,
-    description: String,
-    importance: String,
-    type: String,
-    date_start: String,
-    date_end: String
-  },
-  { versionKey: false }
-);
+
 
 var Event = mongoose.model("Event", eventScheme);
 
@@ -25,7 +16,7 @@ const dbGetEvents = (user, callback) => {
        callback(doc);
      });
 
-
 }
+
 
 export default dbGetEvents;

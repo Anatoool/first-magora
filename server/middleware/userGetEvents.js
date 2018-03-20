@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import dbGetEvents from '../../database/dbEvents';
+import dbGetEvents from '../../database/dbGetEvents';
 
 const userGetEvents = function (req, res, next) {
   var token = req.body.token;

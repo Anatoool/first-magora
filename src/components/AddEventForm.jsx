@@ -3,20 +3,27 @@ import { Field, reduxForm } from 'redux-form';
 //import moment from 'moment';
 
 import PlacesAutocomplete from 'react-places-autocomplete';
-import { geocodeByAddress, geocodeByPlaceId } from 'react-places-autocomplete';
+//import { geocodeByAddress, geocodeByPlaceId } from 'react-places-autocomplete';
 
-import {
-  DatePicker
-} from 'redux-form-material-ui';
+import {  DatePicker } from 'redux-form-material-ui';
 
 import { validate } from './validate/validateAddEventForm';
 
 import '../../styles/common/eventForm.scss';
 
-const renderField = ({ input, label, type, className, meta: { asyncValidating, touched, error } }) => (
+const renderField = ({ input, label, type, className, value, meta: { asyncValidating, touched, error } }) => (
   <div>
     <div className={asyncValidating ? 'async-validating' : ''}>
-      <input {...input} className={className} type={type} placeholder={label}/>
+      <input {...input} className={className} type={type} placeholder={label} value={value}/>
+      {touched && error && <span className="error-event alert alert-danger">{error}</span>}
+    </div>
+  </div>
+);
+
+const hiddenInput = ({ input, className, val, meta: { asyncValidating, touched, error } }) => (
+  <div>
+    <div className={asyncValidating ? 'async-validating' : ''}>
+      <input {...input} className={className} type='hidden' value={val}/>
       {touched && error && <span className="error-event alert alert-danger">{error}</span>}
     </div>
   </div>
@@ -31,12 +38,24 @@ const renderTextarea = ({ input, label, type, className, id, meta: { asyncValida
   </div>
 );
 
+/*const PlaceField = ({ input, inputProps, onSelect, meta: { asyncValidating, touched, error }}) => (
+    <div className={asyncValidating ? 'async-validating' : ''}>
+			<PlacesAutocomplete
+        {...input}
+        inputProps={inputProps}
+        onSelect={onSelect}
+				/>
+			{ touched && error && <span className="error-event alert alert-danger">{error}</span>}
+    </div>
+	);
+*/
+
 const MUIDatePicker = props => (
   <DatePicker
     {...props}
     value={props.val}
   />
-)
+);
 
 class AddEventForm extends Component {
 
@@ -48,7 +67,8 @@ class AddEventForm extends Component {
         minDateStart: minDate,
         dateStart: minDate,
         dateEnd: minDate,
-        address: 'Россия'
+        address: 'Россия',
+        geo: {}
     }
   }
 
@@ -62,22 +82,29 @@ class AddEventForm extends Component {
 
   handleChangeEndDate(event, date) {
     this.setState({dateEnd: date});
+
   }
 
   onChange (address) {
-    this.setState({address: address })
+      this.setState({address: address });
+
+  }
+
+  handleSelectPlace(address) {
+    this.setState({address: address });
+    this.props.change('address', this.state.address);
   }
 
   render() {
 
     const inputProps = {
       value: this.state.address,
-      onChange: this.onChange.bind(this),
+      onChange: this.onChange.bind(this)
     }
 
     return (
       <div className="row">
-        <form onSubmit={ this.props.handleSubmit } className="event-form col-md-8 col-11 bg-dark">
+        <form onSubmit={ this.props.handleSubmit.bind(this) } className="event-form col-md-8 col-11 bg-dark">
 
           <h1 className="">New event</h1>
             <div className="form-group">
@@ -94,9 +121,9 @@ class AddEventForm extends Component {
              <label htmlFor="form-importance" className="text-light">Важность события</label>
               <Field name="importance" component="select"
               className="form-control" id="form-importance">
-                <option value="обычное">Обычное</option>
-                <option value="важное">Важное</option>
-                <option value="очень важное">Очень важное</option>
+                <option value="Обычное">Обычное</option>
+                <option value="Важное">Важное</option>
+                <option value="Очень важное">Очень важное</option>
               </Field>
             </div>
 
@@ -130,7 +157,18 @@ class AddEventForm extends Component {
               </div>
             </div>
 
-            <PlacesAutocomplete inputProps={inputProps}/>
+            <div className="form-group">
+              <label htmlFor="place" className="text-light" style={{marginTop: '10px'}}>Место события</label>
+              <PlacesAutocomplete
+                id = "place"
+                inputProps={inputProps}
+                onSelect={this.handleSelectPlace.bind(this)}
+                />
+            </div>
+
+            <div className="form-group">
+              <Field name="address" component={ hiddenInput } val={this.state.address} className="form-control"/>
+            </div>
 
             <button className="btn btn-primary">Add new event</button>
         </form>
@@ -145,7 +183,8 @@ AddEventForm = reduxForm({
   validate: validate,
   initialValues: {importance: 'обычное',
                     dateStart: new Date(),
-                    dateEnd: new Date()
+                    dateEnd: new Date(),
+                    address: 'Россия'
                   }
 })(AddEventForm);
 
