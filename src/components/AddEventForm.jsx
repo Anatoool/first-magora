@@ -38,18 +38,6 @@ const renderTextarea = ({ input, label, type, className, id, meta: { asyncValida
   </div>
 );
 
-/*const PlaceField = ({ input, inputProps, onSelect, meta: { asyncValidating, touched, error }}) => (
-    <div className={asyncValidating ? 'async-validating' : ''}>
-			<PlacesAutocomplete
-        {...input}
-        inputProps={inputProps}
-        onSelect={onSelect}
-				/>
-			{ touched && error && <span className="error-event alert alert-danger">{error}</span>}
-    </div>
-	);
-*/
-
 const MUIDatePicker = props => (
   <DatePicker
     {...props}
@@ -67,6 +55,7 @@ class AddEventForm extends Component {
         minDateStart: minDate,
         dateStart: minDate,
         dateEnd: minDate,
+        inputAddress: 'Россия',
         address: 'Россия',
         geo: {}
     }
@@ -87,12 +76,13 @@ class AddEventForm extends Component {
 
   onChange (address) {
       this.setState({address: address });
-
+      //this.props.change('address', this.state.address);
   }
 
   handleSelectPlace(address) {
     this.setState({address: address });
     this.props.change('address', this.state.address);
+    
   }
 
   render() {
@@ -163,7 +153,7 @@ class AddEventForm extends Component {
                 id = "place"
                 inputProps={inputProps}
                 onSelect={this.handleSelectPlace.bind(this)}
-                />
+              />
             </div>
 
             <div className="form-group">
@@ -183,8 +173,8 @@ AddEventForm = reduxForm({
   validate: validate,
   initialValues: {importance: 'обычное',
                     dateStart: new Date(),
-                    dateEnd: new Date(),
-                    address: 'Россия'
+                    dateEnd: new Date()
+
                   }
 })(AddEventForm);
 
