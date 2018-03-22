@@ -13,6 +13,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 import Homepage from './components/Homepage';
 import Addevent from './components/Addevent';
+import Profile from './components/profile/Profile';
 
 import 'styles/index.scss';
 import 'normalize.css';
@@ -26,6 +27,7 @@ const Routes = () => (
           <Route path="/admin" component={Admin}/>
           <ProtectedRoute path="/homepage" component={Homepage}/>
           <ProtectedRoute path="/addevent" component={Addevent}/>
+          <ProtectedRoute path="/profile" component={Profile}/>
           <Route path="*" component={Notfound}/>
       </Switch>
 

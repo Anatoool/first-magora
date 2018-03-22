@@ -9,6 +9,7 @@ var userScheme = new Schema({
     login: String,
     password: String,
     email: String,
+    name: String,
     role: String
   },
   { versionKey: false }

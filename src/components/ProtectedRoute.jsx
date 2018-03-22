@@ -4,6 +4,8 @@ import {Route, Redirect} from 'react-router-dom';
 import getCookie from './cookie/getCookie';
 import deleteCookie from './cookie/deleteCookie';
 
+import { connect } from 'react-redux';
+
 const request = () => {
   return new Promise((resolve, reject) => {
 
@@ -16,7 +18,7 @@ const request = () => {
 
         body = JSON.stringify(body);
 
-        xhr.open('POST', '/role/get');
+        xhr.open('POST', '/profile/get');
 
         xhr.onload = () => resolve(xhr.responseText);
         xhr.onerror = () => reject(xhr.statusText);
@@ -34,11 +36,14 @@ class ProtectedRoute extends Component {
 
   checkRole() {
     request().then(resolve => {
-
         const data = JSON.parse(resolve);
-        console.log(data.role);
         this.setState({role: data.role, login: data.login});
-
+        const profile = {
+          login: data.login,
+          name: data.name,
+          email: data.email
+        };
+        this.props.onLoadProfile(profile);
     });
   }
 
@@ -62,4 +67,13 @@ class ProtectedRoute extends Component {
 
 }
 
-export default ProtectedRoute;
+export default connect(
+  state => ({
+    userProfile: state.userProfile
+  }),
+  dispatch => ({
+    onLoadProfile: (response) => {
+      dispatch({ type: 'LOAD_DATA', payload: response });
+    }
+  })
+)(ProtectedRoute);

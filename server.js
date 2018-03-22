@@ -4,7 +4,7 @@ var bodyParser = require("body-parser");
 import { addUser, findUser } from './database/db';
 
 
-import getRoleFromToken from './server/middleware/getRoleFromToken';
+import getProfileFromToken from './server/middleware/getProfileFromToken';
 import userGetEvents from './server/middleware/userGetEvents';
 import userAddEvent from './server/middleware/userAddEvent';
 
@@ -48,7 +48,9 @@ app.post('/login', (req, res) => {
 
         const payload = {
           role: doc.role,
-          login: doc.login
+          login: doc.login,
+          name: doc.name,
+          email: doc.email
         };
 
         var token = jwt.sign(payload, 'my-secret', {
@@ -67,8 +69,8 @@ app.post('/login', (req, res) => {
 
 });
 
-app.use('/role/get', getRoleFromToken);
-app.post('/role/get', (req, res) => {
+app.use('/profile/get', getProfileFromToken);
+app.post('/profile/get', (req, res) => {
 
 });
 

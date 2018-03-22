@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const getRoleFromToken = function (req, res, next) {
+const getProfileFromToken = function (req, res, next) {
   console.log(req.body);
   var token = req.body.token;
 
@@ -10,7 +10,7 @@ const getRoleFromToken = function (req, res, next) {
        if (err) {
          return res.json({ success: false, message: 'Failed to authenticate token.' });
        } else {
-         res.json({role: decoded.role, login: decoded.login});
+         res.json({role: decoded.role, login: decoded.login, name: decoded.name, email: decoded.email});
        }
      });
 
@@ -23,4 +23,4 @@ const getRoleFromToken = function (req, res, next) {
   next();
 };
 
-export default getRoleFromToken;
+export default getProfileFromToken;

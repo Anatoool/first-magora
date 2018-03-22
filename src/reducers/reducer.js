@@ -1,8 +1,10 @@
 import { createStore, combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
+import userProfile from './userProfile';
+
 const reducers = {
-  // ... your other reducers here ...
+  userProfile,
   form: formReducer     // <---- Mounted at 'form'
 };
 const reducer = combineReducers(reducers);

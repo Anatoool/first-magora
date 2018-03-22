@@ -18,7 +18,7 @@ class UserHeader extends Component {
           <Link className="nav-link" to='/addevent'>New event</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#">Profile</a>
+          <Link className="nav-link" to='/profile'>Profile</Link>
         </li>
       </ul>);
     } else if (this.props.page === 'addevent') {
@@ -30,7 +30,7 @@ class UserHeader extends Component {
           <Link className="nav-link" to='/addevent'>New event</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#">Profile</a>
+          <Link className="nav-link" to='/profile'>Profile</Link>
         </li>
       </ul>);
     } else if (this.props.page === 'profile') {
@@ -42,7 +42,7 @@ class UserHeader extends Component {
           <Link className="nav-link" to='/addevent'>New event</Link>
         </li>
         <li className="nav-item active">
-          <a className="nav-link" href="#">Profile</a>
+          <Link className="nav-link" to='/profile'>Profile</Link>
         </li>
       </ul>);
     }
