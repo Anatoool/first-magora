@@ -7,6 +7,7 @@ import { addUser, findUser } from './database/db';
 import getProfileFromToken from './server/middleware/getProfileFromToken';
 import userGetEvents from './server/middleware/userGetEvents';
 import userAddEvent from './server/middleware/userAddEvent';
+import userEditProfile from './server/middleware/userEditProfile';
 
 import preLaunch from './server/preLaunch';
 preLaunch();
@@ -39,7 +40,7 @@ app.post('/login', (req, res) => {
 
   //console.log(req.body);
 
-  findUser(login, password, function(doc) {
+  findUser(login, function(doc) {
 
     if (doc === null) {
       res.json({ success: false});
@@ -48,9 +49,7 @@ app.post('/login', (req, res) => {
 
         const payload = {
           role: doc.role,
-          login: doc.login,
-          name: doc.name,
-          email: doc.email
+          login: doc.login
         };
 
         var token = jwt.sign(payload, 'my-secret', {
@@ -73,6 +72,9 @@ app.use('/profile/get', getProfileFromToken);
 app.post('/profile/get', (req, res) => {
 
 });
+
+app.use('/user/profile/edit', userEditProfile);
+app.put('/user/profile/edit', (req, res) => {});
 
 app.use('/user/events/get', userGetEvents);
 app.post('/user/events/get', (req, res) => {

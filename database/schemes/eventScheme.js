@@ -8,8 +8,8 @@ var eventScheme = new Schema({
     description: String,
     importance: String,
     place: String,
-    date_start: String,
-    date_end: String
+    date_start: Date,
+    date_end: Date
   },
   { versionKey: false }
 );

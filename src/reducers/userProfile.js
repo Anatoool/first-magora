@@ -8,8 +8,8 @@ const initialState = {
 export default function userProfile(state = initialState, action){
   if (action.type === 'LOAD_DATA') {
     return action.payload;
-  } else if (action.type === 'DELETE_TRACK') {
-    //empty
+  } else if (action.type === 'EDIT_PROFILE') {
+    return action.payload;
   }
   return state;
 }

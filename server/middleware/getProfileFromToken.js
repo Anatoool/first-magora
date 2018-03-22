@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 
+import { findUser } from '../../database/db';
+
 const getProfileFromToken = function (req, res, next) {
   console.log(req.body);
   var token = req.body.token;
@@ -10,7 +12,9 @@ const getProfileFromToken = function (req, res, next) {
        if (err) {
          return res.json({ success: false, message: 'Failed to authenticate token.' });
        } else {
-         res.json({role: decoded.role, login: decoded.login, name: decoded.name, email: decoded.email});
+         findUser(decoded.login, function(doc) {
+           res.json({role: decoded.role, login: decoded.login, name: doc.name, email: doc.email});
+         });
        }
      });
 

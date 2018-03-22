@@ -22,6 +22,19 @@ const request = () => {
   });
 }
 
+function formatDate(date) {
+
+  var dd = date.getDate();
+  if (dd < 10) dd = '0' + dd;
+
+  var mm = date.getMonth() + 1;
+  if (mm < 10) mm = '0' + mm;
+
+  var yyyy = date.getFullYear();
+
+  return dd + '.' + mm + '.' + yyyy;
+}
+
 class UserEventsTable extends Component {
 
   getEvents() {
@@ -35,14 +48,21 @@ class UserEventsTable extends Component {
     var arr = [];
 
        this.state.renderTable.map(function(el, index){
+
+         var dateStart = new Date(el.date_start);
+         dateStart = formatDate(dateStart);
+
+         var dateEnd = new Date(el.date_end);
+         dateEnd = formatDate(dateEnd);
+         
          arr.push(
            <tr key={index}>
              <td>{el.name}</td>
              <td>{el.description}</td>
              <td>{el.importance}</td>
              <td>{el.place}</td>
-             <td>{el.date_start}</td>
-             <td>{el.date_end}</td>
+             <td>{dateStart}</td>
+             <td>{dateEnd}</td>
            </tr>);
 
         });

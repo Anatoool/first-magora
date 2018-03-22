@@ -1,19 +1,11 @@
 import mongoose from 'mongoose';
 
-var Schema = mongoose.Schema;
 // для работы с promise
 mongoose.Promise = global.Promise;
 
+import userScheme from './schemes/userScheme';
 // установка схемы
-var userScheme = new Schema({
-    login: String,
-    password: String,
-    email: String,
-    name: String,
-    role: String
-  },
-  { versionKey: false }
-);
+
 
 var User = mongoose.model("User", userScheme);
 
@@ -37,7 +29,7 @@ function addUser(login, password, email) {
 
 }
 
-function findUser (login, password, callback) {
+function findUser (login, callback) {
 
  User.findOne({login: login}).then( (doc) => {
     callback(doc);

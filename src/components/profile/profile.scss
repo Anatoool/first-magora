@@ -27,3 +27,9 @@
   margin-top: 20px;
   margin-bottom: 10px;
 }
+
+.btn-edit-form {
+  @extend .btn-edit;
+   float: right;
+   margin-left: 10px;
+}
