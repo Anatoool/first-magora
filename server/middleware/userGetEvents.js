@@ -11,9 +11,10 @@ const userGetEvents = function (req, res, next) {
        if (err) {
          return res.json({ success: false, message: 'Failed to authenticate token.' });
        } else {
+         const page = req.body.page;
          //Надо сделать запрос в БД всех событий пользователя с логином
-         dbGetEvents(decoded.login, (docs) => {
-           res.json({events: docs});
+         dbGetEvents(decoded.login, page, "date_start", (docs, countEvents) => {
+           res.json({events: docs, count: countEvents});
          });
        }
      });

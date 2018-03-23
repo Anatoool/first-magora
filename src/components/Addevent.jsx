@@ -65,7 +65,7 @@ class Addevent extends Component {
         </div>
       );
     } else {
-      return <Redirect to='/homepage' />;
+      return <Redirect to='/homepage/1' />;
     }
 
   }

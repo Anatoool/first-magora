@@ -10,10 +10,17 @@ mongoose.Promise = global.Promise;
 
 var Event = mongoose.model("Event", eventScheme);
 
-const dbGetEvents = (user, callback) => {
+const dbGetEvents = (user, page, sortField, callback) => {
 
-    Event.find({user: user}).then( (doc) => {
-       callback(doc);
+    const skiped = 10 * (page - 1);
+    var countEvents = 0;
+
+    Event.count({user: user}, function( err, count){
+      countEvents = count;
+    });
+
+    Event.find({user: user}).sort('-' + sortField).skip(skiped).limit(10).then( (doc) => {
+       callback(doc, countEvents);
      });
 
 }

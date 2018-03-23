@@ -40,8 +40,10 @@
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "redux": "3.7.2",
+    "redux-devtools-extension": "^2.13.2",
     "redux-form": "7.3.0",
     "redux-form-material-ui": "^4.3.3",
+    "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.6"
   },
   "devDependencies": {

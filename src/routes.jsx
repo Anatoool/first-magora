@@ -25,7 +25,7 @@ const Routes = () => (
       <Switch>
           <Route exact path="/" component={LSForm}/>
           <Route path="/admin" component={Admin}/>
-          <ProtectedRoute path="/homepage" component={Homepage}/>
+          <ProtectedRoute path="/homepage/:number" component={Homepage}/>
           <ProtectedRoute path="/addevent" component={Addevent}/>
           <ProtectedRoute path="/profile" component={Profile}/>
           <Route path="*" component={Notfound}/>

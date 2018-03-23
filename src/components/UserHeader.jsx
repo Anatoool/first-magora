@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import deleteCookie from './cookie/deleteCookie';
+import { connect } from 'react-redux';
 
 class UserHeader extends Component {
 
@@ -12,7 +13,7 @@ class UserHeader extends Component {
     if (this.props.page === 'homepage') {
       return (<ul className="navbar-nav">
         <li className="nav-item active">
-          <Link className="nav-link" to='/homepage'>Events</Link>
+          <Link className="nav-link" to={'/homepage/' + this.props.homepageNumber.currentNumber}>Events</Link>
         </li>
         <li className="nav-item">
           <Link className="nav-link" to='/addevent'>New event</Link>
@@ -24,7 +25,7 @@ class UserHeader extends Component {
     } else if (this.props.page === 'addevent') {
       return (<ul className="navbar-nav">
         <li className="nav-item">
-          <Link className="nav-link" to='/homepage'>Events</Link>
+          <Link className="nav-link" to={'/homepage/' + this.props.homepageNumber.currentNumber}>Events</Link>
         </li>
         <li className="nav-item active">
           <Link className="nav-link" to='/addevent'>New event</Link>
@@ -36,7 +37,7 @@ class UserHeader extends Component {
     } else if (this.props.page === 'profile') {
       return (<ul className="navbar-nav">
         <li className="nav-item">
-          <Link className="nav-link" to='/homepage'>Events</Link>
+          <Link className="nav-link" to={'/homepage/' + this.props.homepageNumber.currentNumber}>Events</Link>
         </li>
         <li className="nav-item">
           <Link className="nav-link" to='/addevent'>New event</Link>
@@ -72,11 +73,13 @@ class UserHeader extends Component {
                 </span>
               </div>
           </nav>
-
-
     );
   }
 
 }
 
-export default UserHeader;
+export default connect(
+  state => ({
+    homepageNumber: state.homepageNumber
+  })
+)(UserHeader);

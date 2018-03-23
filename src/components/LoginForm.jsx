@@ -37,7 +37,7 @@ class LoginForm extends Component {
     const { handleSubmit, error} = this.props;
 
     if (this.state.token !== null) {
-        return <Redirect to='/homepage' />;
+        return <Redirect to='/homepage/1' />;
 
     } else {
       return (

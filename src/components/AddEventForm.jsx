@@ -82,7 +82,7 @@ class AddEventForm extends Component {
   handleSelectPlace(address) {
     this.setState({address: address });
     this.props.change('address', this.state.address);
-    
+
   }
 
   render() {
@@ -173,7 +173,8 @@ AddEventForm = reduxForm({
   validate: validate,
   initialValues: {importance: 'обычное',
                     dateStart: new Date(),
-                    dateEnd: new Date()
+                    dateEnd: new Date(),
+                    address: 'Россия'
 
                   }
 })(AddEventForm);
