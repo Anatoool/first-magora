@@ -15,7 +15,7 @@ class Pagination extends Component {
   clickLink(event) {
     const number = Number(event.target.innerHTML);
     this.setState({currentNumber: number});
-    this.props.onClickLink(number);
+    this.props.onClickLink(number, this.props.userEventsSort.field, this.props.userEventsSort.dierection);
   }
 
   renderLinks(number){
@@ -41,11 +41,12 @@ class Pagination extends Component {
 
   render () {
     return (
-        <div className='row'>
-          <ul className="pagination" style={{margin: 'auto'}}>
-            {this.renderLinks(this.props.homepageNumber.numberPage)}
-          </ul>
-
+        <div className='container-fluid'>
+          <div className='row' style={{maxWidth: '100%'}}>
+            <ul className="pagination" style={{margin: 'auto'}}>
+              {this.renderLinks(this.props.homepageNumber.numberPage)}
+            </ul>
+          </div>
         </div>
     );
   }
@@ -54,12 +55,13 @@ class Pagination extends Component {
 
 export default connect(
   state => ({
-    homepageNumber: state.homepageNumber    
+    homepageNumber: state.homepageNumber,
+    userEventsSort: state.userEventsSort
   }),
   dispatch => ({
-    onClickLink: (number) => {
+    onClickLink: (number, field, direction) => {
       dispatch({ type: 'CHANGE_PAGE', payload: number });
-      dispatch(GetEvents(number));
+      dispatch(GetEvents(number, field, direction));
     }
   })
 )(Pagination);

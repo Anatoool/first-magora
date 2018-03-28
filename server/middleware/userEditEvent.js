@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken';
 
-import dbEditProfile from '../../database/dbEditProfile';
+import dbEditEvent from '../../database/dbEditEvent';
 
-const userEditProfile = function (req, res) {
-  var token = req.body.token;
+const userEditEvent = function (req, res) {
+
+  var token = req.cookies.token;
 
    if (token) {
 
@@ -11,18 +12,16 @@ const userEditProfile = function (req, res) {
        if (err) {
          return res.json({ success: false, message: 'Failed to authenticate token.' });
        } else {
+         var event = req.body.event;
+         event = JSON.parse(event);
 
-         var profile = req.body.profile;
-         profile = JSON.parse(profile);
-         dbEditProfile(decoded.login,
-                    profile.name,
-                    profile.email,
+         dbEditEvent(event,
                     (error, result) => {
                       if (error) {
                         console.log(error);
                       } else {
                         console.log(result);
-                        res.json({status: 'updated'});
+                        res.status(200).json({status: 'updated'});
                       }
                     });
        }
@@ -34,7 +33,7 @@ const userEditProfile = function (req, res) {
          message: 'No token provided.'
      });
    }
-  
+
 };
 
-export default userEditProfile;
+export default userEditEvent;

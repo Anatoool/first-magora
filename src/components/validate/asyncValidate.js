@@ -1,5 +1,19 @@
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
+/*const request = (login) => {
+
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+
+    xhr.open('GET', '/login');
+
+    xhr.onload = () => resolve(xhr.responseText);
+    xhr.onerror = () => reject(xhr.statusText);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(body);
+  });
+}*/
+
 function loginVerify(login) {
 
   var busy = false;

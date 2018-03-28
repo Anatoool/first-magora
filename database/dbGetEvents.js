@@ -7,19 +7,22 @@ mongoose.Promise = global.Promise;
 
 // установка схемы
 
-
 var Event = mongoose.model("Event", eventScheme);
 
-const dbGetEvents = (user, page, sortField, callback) => {
+const dbGetEvents = (user, page, pageSize, sortField, callback) => {
 
-    const skiped = 10 * (page - 1);
+    const skiped = pageSize * (page - 1);
     var countEvents = 0;
 
     Event.count({user: user}, function( err, count){
       countEvents = count;
     });
 
-    Event.find({user: user}).sort('-' + sortField).skip(skiped).limit(10).then( (doc) => {
+    if (sortField[0] === "!") {
+      sortField = '-' + sortField.substring(1);
+    }
+
+    Event.find({user: user}).sort(sortField).skip(skiped).limit(10).then( (doc) => {
        callback(doc, countEvents);
      });
 

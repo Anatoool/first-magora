@@ -46,6 +46,18 @@ class UserHeader extends Component {
           <Link className="nav-link" to='/profile'>Profile</Link>
         </li>
       </ul>);
+    } else if (this.props.page === 'none') {
+      return (<ul className="navbar-nav">
+        <li className="nav-item">
+          <Link className="nav-link" to={'/homepage/' + this.props.homepageNumber.currentNumber}>Events</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to='/addevent'>New event</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to='/profile'>Profile</Link>
+        </li>
+      </ul>);
     }
   }
 

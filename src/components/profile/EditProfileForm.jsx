@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 
 import { validate } from './validateForm';
 
-const renderField = ({ input, label, type, className, val, meta: { asyncValidating, touched, error } }) => (
+const renderField = ({ input, label, type, className, meta: { asyncValidating, touched, error } }) => (
   <div>
     <div className={asyncValidating ? 'async-validating' : ''}>
       <input {...input} className={className} type={type} placeholder={label}/>

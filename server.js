@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 var bodyParser = require("body-parser");
+import cookieParser from 'cookie-parser';
 import { addUser, findUser } from './database/db';
 
 
@@ -8,6 +9,8 @@ import getProfileFromToken from './server/middleware/getProfileFromToken';
 import userGetEvents from './server/middleware/userGetEvents';
 import userAddEvent from './server/middleware/userAddEvent';
 import userEditProfile from './server/middleware/userEditProfile';
+import userEditEvent from './server/middleware/userEditEvent';
+import usersGetCount from './server/middleware/usersGetCount';
 
 import preLaunch from './server/preLaunch';
 preLaunch();
@@ -18,13 +21,12 @@ const port = process.env.PORT || 8080;
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 
 app.use(express.static(`${__dirname}/public`));
 
-app.get('*', (request, response) => {
-  response.sendFile(path.resolve(__dirname, 'public', 'index1.html'));
-});
+
 
 var myLogger = function (req, res, next) {
   console.log('LOGGED');
@@ -68,21 +70,33 @@ app.post('/login', (req, res) => {
 
 });
 
+app.get('/api/users/count', (req, res) => {
+  usersGetCount(req, res);
+});
+
 app.use('/profile/get', getProfileFromToken);
 app.post('/profile/get', (req, res) => {
 
 });
 
-app.use('/user/profile/edit', userEditProfile);
-app.put('/user/profile/edit', (req, res) => {});
+app.put('/user/profile/edit', (req, res) => {
+  userEditProfile(req, res);
+});
 
-app.use('/user/events/get', userGetEvents);
-app.post('/user/events/get', (req, res) => {
-
+app.get('/api/user/events', (req, res) => {
+  userGetEvents(req, res);
 });
 
 app.use('/user/event/add', userAddEvent);
 app.post('/user/event/add', (req, res) => {
+});
+
+app.put('/api/user/events', (req, res) => {
+  userEditEvent(req, res);
+});
+
+app.get('*', (request, response) => {
+  response.sendFile(path.resolve(__dirname, 'public', 'index1.html'));
 });
 
 

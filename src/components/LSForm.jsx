@@ -25,22 +25,21 @@ class LSForm extends Component {
     let user = {
       login: values.login,
       password: values.password,
-      email: values.email,
-      role: "user"
+      email: values.email
     };
 
-    let usersJSON = localStorage.getItem('Users');//Получаем массив
+    /*let usersJSON = localStorage.getItem('Users');//Получаем массив
     let usersArray = JSON.parse(usersJSON);// Парсим
     usersArray.push(user);//Add user to array
     //console.log(usersArray);
     usersJSON = JSON.stringify(usersArray);//code to JSON
-    localStorage.setItem('Users', usersJSON);//Rewrite Users store
+    localStorage.setItem('Users', usersJSON);//Rewrite Users store*/
 
     // let usersJSON = JSON.stringify(users);
     // localStorage.setItem('Users', usersJSON);
     // console.log( JSON.parse( localStorage.getItem('Users') ) );
 
-    console.log(values, 'SignUp');
+    console.log(user, 'SignUp');
     console.log(values.password);
   }
 

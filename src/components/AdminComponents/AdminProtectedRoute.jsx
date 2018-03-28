@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {Route, Redirect} from 'react-router-dom';
 
-import getCookie from './cookie/getCookie';
-import deleteCookie from './cookie/deleteCookie';
+import getCookie from '../cookie/getCookie';
+import deleteCookie from '../cookie/deleteCookie';
 
 import { connect } from 'react-redux';
 
@@ -27,7 +27,7 @@ const request = () => {
   });
 }
 
-class ProtectedRoute extends Component {
+class AdminProtectedRoute extends Component {
 
   constructor(props) {
     super(props);
@@ -53,11 +53,11 @@ class ProtectedRoute extends Component {
         return  (<div>
                 Пожалуйста подождите
               </div>);
-      } else if (this.state.role === 'user') {
+      } else if (this.state.role === 'admin') {
         return <Route path={ this.props.location.pathname }
                       render={ () => <this.props.component page={this.props.computedMatch.params.number} login = {this.state.login}/> }/>;
-      } else if (this.state.role === 'admin') {
-        return <Redirect to='/admin/1' />;
+      } else if (this.state.role === 'user') {
+        return <Redirect to='/homepage/1' />;
       } else {
         deleteCookie('token');
         return <Redirect to='/' />;
@@ -76,4 +76,4 @@ export default connect(
       dispatch({ type: 'LOAD_DATA', payload: response });
     }
   })
-)(ProtectedRoute);
+)(AdminProtectedRoute);
