@@ -7,6 +7,10 @@ import userEvents from './userEvents';
 import userEventsSort from './userEventsSort';
 import editableEvent from './editableEvent';
 
+import adminEventsNumber from './adminReducers/adminEventsNumber';
+import adminEventsSort from './adminReducers/adminEventsSort';
+import adminEvents from './adminReducers/adminEvents';
+
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -16,6 +20,11 @@ const reducers = {
   userEvents,
   userEventsSort,
   editableEvent,
+
+  adminEvents,
+  adminEventsNumber,
+  adminEventsSort,
+
   form: formReducer     // <---- Mounted at 'form'
 };
 const reducer = combineReducers(reducers);

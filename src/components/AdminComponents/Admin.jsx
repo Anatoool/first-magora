@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import dog from '../../images/dog.png';
 //import axios from 'axios';
+
+import AdminHeader from './AdminHeader';
+import EventsPagination from './EventsPagination';
+import AdminEventsTable from './AdminEventsTable';
 
 class Admin extends Component {
 
   render () {
     return (
       <div>
-        Hello Admin
-    		<img src={dog} className="small-img"/>
-        <div onClick = {this.AjaxTest.bind(this)}>Запрос</div>
+        <AdminHeader login={this.props.login} page="admin"/>
+        <AdminEventsTable page={Number(this.props.page)}/>
+        <EventsPagination startPage={Number(this.props.page)}/>
       </div>
     );
   }

@@ -28,7 +28,9 @@ const Routes = () => (
 
       <Switch>
           <Route exact path="/" component={LSForm}/>
+
           <AdminProtectedRoute path="/admin/:number" component={Admin}/>
+          
           <ProtectedRoute path="/homepage/:number" component={Homepage}/>
           <ProtectedRoute path="/addevent" component={Addevent}/>
           <ProtectedRoute path="/editevent" component={Editevent}/>

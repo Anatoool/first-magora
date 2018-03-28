@@ -12,6 +12,8 @@ import userEditProfile from './server/middleware/userEditProfile';
 import userEditEvent from './server/middleware/userEditEvent';
 import usersGetCount from './server/middleware/usersGetCount';
 
+import adminGetEvents from './server/middleware/adminGetEvents';
+
 import preLaunch from './server/preLaunch';
 preLaunch();
 
@@ -83,8 +85,14 @@ app.put('/user/profile/edit', (req, res) => {
   userEditProfile(req, res);
 });
 
+//Получение событий пользователя
 app.get('/api/user/events', (req, res) => {
   userGetEvents(req, res);
+});
+
+//Получение событий администратора
+app.get('/api/admin/events', (req, res) => {
+  adminGetEvents(req, res);
 });
 
 app.use('/user/event/add', userAddEvent);
