@@ -9,7 +9,8 @@ var eventScheme = new Schema({
     importance: String,
     place: String,
     date_start: Date,
-    date_end: Date
+    date_end: Date,
+    deleted: Boolean
   },
   { versionKey: false }
 );

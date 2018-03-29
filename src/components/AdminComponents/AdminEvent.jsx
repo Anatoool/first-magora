@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 function formatDate(date) {
@@ -20,7 +20,8 @@ class AdminEvent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editable: false
+      editable: false,
+      deleted: this.props.deleted
     }
   }
 
@@ -37,11 +38,11 @@ class AdminEvent extends Component {
     this.setState({editable: true});
   }
 
-  render () {
+  deleteEvent() {
+    console.log(this.props.id);
+  }
 
-    if (this.state.editable === true) {
-        return <Redirect to='/editeventAdmin' />;
-    }
+  rendEvent() {
 
     var dateStart = new Date(this.props.dateStart);
     dateStart = formatDate(dateStart);
@@ -49,17 +50,79 @@ class AdminEvent extends Component {
     var dateEnd = new Date(this.props.dateEnd);
     dateEnd = formatDate(dateEnd);
 
+    if (this.state.deleted === false) {
+      return(
+        [
+          <td key="1" align="center">{this.props.user}</td>,
+          <td key="2">{this.props.name}</td>,
+          <td key="3">{this.props.description}</td>,
+          <td key="4">{this.props.importance}</td>,
+          <td key="5">{this.props.place}</td>,
+          <td key="6">{dateStart}</td>,
+          <td key="7">{dateEnd}</td>,
+          <td key="8" align="center">
+            <Link to={'/admineditevent/' + this.props.id} className="btn btn-secondary">Edit</Link>
+            <button className="btn btn-danger"
+                    data-toggle="modal"
+                    data-target={"#myModal" + this.props.id}>Del
+            </button>
+
+            <div className="modal fade" id={"myModal" + this.props.id}>
+              <div className="modal-dialog">
+                <div className="modal-content">
+
+                <div className="modal-header">
+                  <h4 className="modal-title">Вы действительно хотите удалить это событие?</h4>
+                  <button type="button" className="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div className="modal-body">
+                  {'id:' + this.props.id}
+                  <br />
+                  {'Название:' + this.props.name}
+                </div>
+
+                <div className="modal-footer">
+                  <button onClick={this.deleteEvent.bind(this)} type="button" className="btn btn-danger" data-dismiss="modal">Удалить</button>
+                  <button type="button" className="btn btn-primary" data-dismiss="modal">Отмена</button>
+                </div>
+
+                </div>
+              </div>
+            </div>
+          </td>
+        ]
+      );
+    } else {
+      return(
+        [
+          <td key="1" className="table-danger">{this.props.user}</td>,
+          <td key="2" className="table-danger">{this.props.name}</td>,
+          <td key="3" className="table-danger">{this.props.description}</td>,
+          <td key="4" className="table-danger">{this.props.importance}</td>,
+          <td key="5" className="table-danger">{this.props.place}</td>,
+          <td key="6" className="table-danger">{dateStart}</td>,
+          <td key="7" className="table-danger">{dateEnd}</td>,
+          <td key="8" align="center" className="table-danger">
+            <Link to={'/admineditevent/' + this.props.id} className="btn btn-secondary">Edit</Link>
+          </td>
+        ]
+      );
+    }
+  }
+
+  render () {
+    if (this.state.editable === true) {
+        return <Redirect to='/editeventAdmin' />;
+    }
+
     return (
       <tr>
-        <td>{this.props.user}</td>
-        <td>{this.props.name}</td>
-        <td>{this.props.description}</td>
-        <td>{this.props.importance}</td>
-        <td>{this.props.place}</td>
-        <td>{dateStart}</td>
-        <td>{dateEnd}</td>
-        <td><div onClick={this.editClick.bind(this)} className="btn btn-secondary">Edit</div></td>
-      </tr>);
+        {
+          this.rendEvent()
+        }
+      </tr>
+    );
   }
 
 }

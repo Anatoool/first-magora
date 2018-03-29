@@ -55,7 +55,9 @@ class AdminProtectedRoute extends Component {
               </div>);
       } else if (this.state.role === 'admin') {
         return <Route path={ this.props.location.pathname }
-                      render={ () => <this.props.component page={this.props.computedMatch.params.number} login = {this.state.login}/> }/>;
+                      render={ () => <this.props.component page={this.props.computedMatch.params.number}
+                        params={this.props.computedMatch.params}
+                        login = {this.state.login}/> }/>;
       } else if (this.state.role === 'user') {
         return <Redirect to='/homepage/1' />;
       } else {

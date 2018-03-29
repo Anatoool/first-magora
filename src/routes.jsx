@@ -13,6 +13,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 import Admin from './components/AdminComponents/Admin';
 import AdminProtectedRoute from './components/AdminComponents/AdminProtectedRoute';
+import AdminEditevent from './components/AdminComponents/AdminEditevent';
 
 import Homepage from './components/Homepage';
 import Addevent from './components/Addevent';
@@ -30,10 +31,11 @@ const Routes = () => (
           <Route exact path="/" component={LSForm}/>
 
           <AdminProtectedRoute path="/admin/:number" component={Admin}/>
-          
+          <AdminProtectedRoute path="/admineditevent/:id" component={AdminEditevent}/>
+
           <ProtectedRoute path="/homepage/:number" component={Homepage}/>
           <ProtectedRoute path="/addevent" component={Addevent}/>
-          <ProtectedRoute path="/editevent" component={Editevent}/>
+          <ProtectedRoute path="/editevent/:id" component={Editevent}/>
           <ProtectedRoute path="/profile" component={Profile}/>
           <Route path="*" component={Notfound}/>
       </Switch>

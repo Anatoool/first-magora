@@ -14,7 +14,7 @@ const dbGetEvents = (user, page, pageSize, sortField, callback) => {
     const skiped = pageSize * (page - 1);
     var countEvents = 0;
 
-    Event.count({user: user}, function( err, count){
+    Event.count({user: user, deleted: false}, function( err, count){
       countEvents = count;
     });
 
@@ -22,7 +22,7 @@ const dbGetEvents = (user, page, pageSize, sortField, callback) => {
       sortField = '-' + sortField.substring(1);
     }
 
-    Event.find({user: user}).sort(sortField).skip(skiped).limit(10).then( (doc) => {
+    Event.find({user: user, deleted: false}).sort(sortField).skip(skiped).limit(10).then( (doc) => {
        callback(doc, countEvents);
      });
 

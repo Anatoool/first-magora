@@ -11,8 +11,11 @@ import userAddEvent from './server/middleware/userAddEvent';
 import userEditProfile from './server/middleware/userEditProfile';
 import userEditEvent from './server/middleware/userEditEvent';
 import usersGetCount from './server/middleware/usersGetCount';
+import userGetEvent from './server/middleware/userGetEvent';
 
 import adminGetEvents from './server/middleware/adminGetEvents';
+import adminGetEvent from './server/middleware/adminGetEvent';
+import adminEditEvent from './server/middleware/adminEditEvent';
 
 import preLaunch from './server/preLaunch';
 preLaunch();
@@ -85,24 +88,39 @@ app.put('/user/profile/edit', (req, res) => {
   userEditProfile(req, res);
 });
 
-//Получение событий пользователя
+//Получение единственного события для юзера и администратора
+app.get('/api/user/events/:id', (req, res) => {
+  userGetEvent(req, res);
+});
+
+app.get('/api/admin/events/:id', (req, res) => {
+  adminGetEvent(req, res);
+});
+
+//Получение событий пользователя и администратора
 app.get('/api/user/events', (req, res) => {
   userGetEvents(req, res);
 });
 
-//Получение событий администратора
 app.get('/api/admin/events', (req, res) => {
   adminGetEvents(req, res);
 });
 
+//Добавление события пользователя
 app.use('/user/event/add', userAddEvent);
 app.post('/user/event/add', (req, res) => {
 });
 
-app.put('/api/user/events', (req, res) => {
+//Редактирование события пользователем и администратором
+app.put('/api/user/events/:id', (req, res) => {
   userEditEvent(req, res);
 });
 
+app.put('/api/admin/events/:id', (req, res) => {
+  adminEditEvent(req, res);
+});
+
+//Загрузка основного файла
 app.get('*', (request, response) => {
   response.sendFile(path.resolve(__dirname, 'public', 'index1.html'));
 });

@@ -9,8 +9,12 @@ class AdminEventsTable extends Component {
 
     constructor(props) {
       super(props);
-      this.props.onGetEvents(this.props.page, this.props.adminEventsSort.field, this.props.adminEventsSort.dierection);
+      this.getEvents();
     }
+
+  getEvents() {
+    this.props.onGetEvents(this.props.page, this.props.adminEventsSort.field, this.props.adminEventsSort.dierection);
+  }
 
   rendHeaderName(){
     if (this.props.adminEventsSort.field === 'name') {
@@ -77,6 +81,7 @@ class AdminEventsTable extends Component {
                       place={el.place}
                       dateStart={el.date_start}
                       dateEnd={el.date_end}
+                      deleted={el.deleted}
            />);
 
         });
@@ -87,7 +92,7 @@ class AdminEventsTable extends Component {
   render () {
 
             return (
-                <table className="table">
+                <table className="table table-bordered table-sm table-striped">
                   <thead className="thead-dark">
                     <tr>
                       <th scope="col">User</th>
@@ -120,7 +125,7 @@ export default connect(
   dispatch => ({
     onGetEvents: (page, field, direction) => {
       dispatch(GetAllEvents(page, field, direction));
-      dispatch({ type: 'CHANGE_COUNT_PAGE_ADMIN_EVENTS', payload: page });
+      dispatch({ type: 'CHANGE_PAGE_ADMIN_EVENTS', payload: page });
     },
     onSortName: () => {
         dispatch({ type: 'ADMIN_CHANGE_SORT_EVENTS', payload: 'name' });

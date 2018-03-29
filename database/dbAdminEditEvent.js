@@ -8,9 +8,9 @@ import eventScheme from './schemes/eventScheme';
 
 var Event = mongoose.model("Event", eventScheme);
 
-function dbEditEvent(event, login, id, callback) {
+function dbAdminEditEvent(event, id, callback) {
 
-  Event.update({_id: id, user: login, deleted: false},
+  Event.update({_id: id},
     {
       name: event.name,
       description: event.description,
@@ -25,4 +25,4 @@ function dbEditEvent(event, login, id, callback) {
 
 }
 
-export default dbEditEvent;
+export default dbAdminEditEvent;

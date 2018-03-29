@@ -55,7 +55,8 @@ class ProtectedRoute extends Component {
               </div>);
       } else if (this.state.role === 'user') {
         return <Route path={ this.props.location.pathname }
-                      render={ () => <this.props.component page={this.props.computedMatch.params.number} login = {this.state.login}/> }/>;
+                      render={ () => <this.props.component page={this.props.computedMatch.params.number}
+                      params={this.props.computedMatch.params} login = {this.state.login}/> }/>;
       } else if (this.state.role === 'admin') {
         return <Redirect to='/admin/1' />;
       } else {

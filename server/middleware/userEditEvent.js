@@ -15,7 +15,7 @@ const userEditEvent = function (req, res) {
          var event = req.body.event;
          event = JSON.parse(event);
 
-         dbEditEvent(event,
+         dbEditEvent(event, decoded.login, req.params.id,
                     (error, result) => {
                       if (error) {
                         console.log(error);

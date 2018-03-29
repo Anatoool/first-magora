@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 function formatDate(date) {
@@ -40,7 +40,7 @@ class UserEvent extends Component {
   render () {
 
     if (this.state.editable === true) {
-        return <Redirect to='/editevent' />;
+        return <Redirect to={'/editevent/' + this.props.id} />;
     }
 
     var dateStart = new Date(this.props.dateStart);
@@ -57,7 +57,7 @@ class UserEvent extends Component {
         <td>{this.props.place}</td>
         <td>{dateStart}</td>
         <td>{dateEnd}</td>
-        <td><div onClick={this.editClick.bind(this)} className="btn btn-secondary">Edit</div></td>
+        <td><Link to={'/editevent/' + this.props.id} className="btn btn-secondary">Edit</Link></td>
       </tr>);
   }
 

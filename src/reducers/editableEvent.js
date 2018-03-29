@@ -1,4 +1,12 @@
-const initialState = {};
+const initialState = {
+  name: '',
+  description: '',
+  importance: 'Обычное',
+  dateEnd: new Date(),
+  dateStart: new Date(),
+  address: 'Россия',
+  id: '1'
+};
 
 
 export default function editableEvent(state = initialState, action){
