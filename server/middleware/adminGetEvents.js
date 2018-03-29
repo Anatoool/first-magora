@@ -16,9 +16,11 @@ const adminGetEvents = function (req, res) {
          const page = req.query.page;
          const pageSize = req.query.pageSize;
          const field = req.query.sort[0];
+         const deleted = req.query.deleted;// true - показывать удаленные, false - нет
+
 
          if (decoded.role === "admin") {
-           dbGetAllEvents(page, pageSize, field, (docs, countEvents) => {
+           dbGetAllEvents(page, pageSize, field, deleted, (docs, countEvents) => {
              res.json({events: docs, count: countEvents});
            });
          } else {

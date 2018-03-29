@@ -16,6 +16,7 @@ import userGetEvent from './server/middleware/userGetEvent';
 import adminGetEvents from './server/middleware/adminGetEvents';
 import adminGetEvent from './server/middleware/adminGetEvent';
 import adminEditEvent from './server/middleware/adminEditEvent';
+import adminDeleteEvent from './server/middleware/adminDeleteEvent';
 
 import preLaunch from './server/preLaunch';
 preLaunch();
@@ -118,6 +119,11 @@ app.put('/api/user/events/:id', (req, res) => {
 
 app.put('/api/admin/events/:id', (req, res) => {
   adminEditEvent(req, res);
+});
+
+//Удаление события администратором
+app.delete('/api/admin/events/:id', (req, res) => {
+  adminDeleteEvent(req, res);
 });
 
 //Загрузка основного файла

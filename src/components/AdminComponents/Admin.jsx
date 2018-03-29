@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import AdminHeader from './AdminHeader';
 import EventsPagination from './EventsPagination';
 import AdminEventsTable from './AdminEventsTable';
+import AdminEventsFilter from './AdminEventsFilter';
 
 class Admin extends Component {
 
@@ -11,7 +12,8 @@ class Admin extends Component {
     return (
       <div>
         <AdminHeader login={this.props.login} page="admin"/>
-        <AdminEventsTable page={Number(this.props.page)}/>
+        <AdminEventsFilter />
+        <AdminEventsTable page={Number(this.props.page)}/>        
         <EventsPagination startPage={Number(this.props.page)}/>
       </div>
     );

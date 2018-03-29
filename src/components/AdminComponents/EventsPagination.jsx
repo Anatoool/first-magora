@@ -15,7 +15,9 @@ class EventsPagination extends Component {
   clickLink(event) {
     const number = Number(event.target.innerHTML);
     this.setState({currentNumber: number});
-    this.props.onClickLink(number, this.props.adminEventsSort.field, this.props.adminEventsSort.dierection);
+    this.props.onClickLink(number, this.props.adminEventsSort.field,
+                           this.props.adminEventsSort.dierection,
+                           this.props.eventsFilter.deletedVisible);
   }
 
   renderLinks(number){
@@ -56,12 +58,13 @@ class EventsPagination extends Component {
 export default connect(
   state => ({
     adminEventsNumber: state.adminEventsNumber,
-    adminEventsSort: state.adminEventsSort
+    adminEventsSort: state.adminEventsSort,
+    eventsFilter: state.adminEventsFilter
   }),
   dispatch => ({
-    onClickLink: (number, field, direction) => {
+    onClickLink: (number, field, direction, deleted) => {
       dispatch({ type: 'CHANGE_PAGE_ADMIN_EVENTS', payload: number });
-      dispatch(GetAllEvents(number, field, direction));
+      dispatch(GetAllEvents(number, field, direction, deleted));
     }
   })
 )(EventsPagination);

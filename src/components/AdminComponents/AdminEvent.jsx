@@ -15,6 +15,21 @@ function formatDate(date) {
   return dd + '.' + mm + '.' + yyyy;
 }
 
+const deleteEvent = (id) => {
+
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+
+    xhr.open('DELETE', '/api/admin/events/' + id);
+
+    xhr.onload = () => resolve(xhr.responseText);
+    xhr.onerror = () => reject(xhr.status, xhr.statusText);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(null);
+  });
+
+}
+
 class AdminEvent extends Component {
 
   constructor(props) {
@@ -39,7 +54,12 @@ class AdminEvent extends Component {
   }
 
   deleteEvent() {
-    console.log(this.props.id);
+    deleteEvent(this.props.id).then( () => {
+      this.setState({deleted: true});
+    }, (status, statusText) => {
+      console.log('Status:', status);
+      console.log('statusText:', statusText);
+    });
   }
 
   rendEvent() {
@@ -61,9 +81,10 @@ class AdminEvent extends Component {
           <td key="6">{dateStart}</td>,
           <td key="7">{dateEnd}</td>,
           <td key="8" align="center">
-            <Link to={'/admineditevent/' + this.props.id} className="btn btn-secondary">Edit</Link>
-            <button className="btn btn-danger"
+            <Link to={'/admineditevent/' + this.props.id} style={{marginTop: '3px'}} className="btn btn-secondary btn-sm">Edit</Link>
+            <button className="btn btn-danger btn-sm"
                     data-toggle="modal"
+                    style={{marginTop: '3px'}}
                     data-target={"#myModal" + this.props.id}>Del
             </button>
 
@@ -104,7 +125,9 @@ class AdminEvent extends Component {
           <td key="6" className="table-danger">{dateStart}</td>,
           <td key="7" className="table-danger">{dateEnd}</td>,
           <td key="8" align="center" className="table-danger">
-            <Link to={'/admineditevent/' + this.props.id} className="btn btn-secondary">Edit</Link>
+            <Link to={'/admineditevent/' + this.props.id}
+                  className="btn btn-sm btn-secondary"
+                  style={{marginTop: '3px'}}>Edit</Link>
           </td>
         ]
       );

@@ -9,7 +9,7 @@ mongoose.Promise = global.Promise;
 
 var Event = mongoose.model("Event", eventScheme);
 
-const dbGetEvents = (page, pageSize, sortField, callback) => {
+const dbGetEvents = (page, pageSize, sortField, deleted, callback) => {
 
     const skiped = pageSize * (page - 1);
     var countEvents = 0;
@@ -22,9 +22,17 @@ const dbGetEvents = (page, pageSize, sortField, callback) => {
       sortField = '-' + sortField.substring(1);
     }
 
-    Event.find({}).sort(sortField).skip(skiped).limit(10).then( (doc) => {
-       callback(doc, countEvents);
-     });
+    console.log(deleted);
+
+    if (deleted === 'true') {
+      Event.find({}).sort(sortField).skip(skiped).limit(10).then( (doc) => {
+         callback(doc, countEvents);
+       });
+    } else {
+      Event.find({deleted: false}).sort(sortField).skip(skiped).limit(10).then( (doc) => {
+         callback(doc, countEvents);
+       });
+    }
 
 }
 

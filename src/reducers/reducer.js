@@ -10,6 +10,7 @@ import editableEvent from './editableEvent';
 import adminEventsNumber from './adminReducers/adminEventsNumber';
 import adminEventsSort from './adminReducers/adminEventsSort';
 import adminEvents from './adminReducers/adminEvents';
+import adminEventsFilter from './adminReducers/adminEventsFilter';
 
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -20,7 +21,7 @@ const reducers = {
   userEvents,
   userEventsSort,
   editableEvent,
-
+  adminEventsFilter,
   adminEvents,
   adminEventsNumber,
   adminEventsSort,

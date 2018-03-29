@@ -13,7 +13,18 @@ class AdminEventsTable extends Component {
     }
 
   getEvents() {
-    this.props.onGetEvents(this.props.page, this.props.adminEventsSort.field, this.props.adminEventsSort.dierection);
+    this.props.onGetEvents(this.props.page,
+                           this.props.adminEventsSort.field,
+                           this.props.adminEventsSort.dierection,
+                           this.props.eventsFilter.deletedVisible
+    );
+  }
+
+  getSortEvents(page, field, direction) {
+    this.props.onGetEvents(page,
+                           field,
+                           direction,
+                           this.props.eventsFilter.deletedVisible);
   }
 
   rendHeaderName(){
@@ -40,15 +51,17 @@ class AdminEventsTable extends Component {
     }
   }
 
+
+
   clickNameSort() {
 
     this.props.onSortName();
     if (this.props.adminEventsSort.field === 'name') {
       if (this.props.adminEventsSort.dierection === 'down') {
-        this.props.onGetEvents(this.props.page, this.props.adminEventsSort.field, 'up');
-      } else {this.props.onGetEvents(this.props.page, this.props.adminEventsSort.field, 'down');}
+        this.getSortEvents(this.props.page, this.props.adminEventsSort.field, 'up');
+      } else {this.getSortEvents(this.props.page, this.props.adminEventsSort.field, 'down');}
     } else {
-      this.props.onGetEvents(this.props.page, 'name', this.props.adminEventsSort.dierection);
+      this.getSortEvents(this.props.page, 'name', this.props.adminEventsSort.dierection);
     }
 
   }
@@ -59,10 +72,10 @@ class AdminEventsTable extends Component {
 
     if (this.props.adminEventsSort.field === 'date_start') {
       if (this.props.adminEventsSort.dierection === 'down') {
-        this.props.onGetEvents(this.props.page, this.props.adminEventsSort.field, 'up');
-      } else {this.props.onGetEvents(this.props.page, this.props.adminEventsSort.field, 'down');}
+        this.getSortEvents(this.props.page, this.props.adminEventsSort.field, 'up');
+      } else {this.getSortEvents(this.props.page, this.props.adminEventsSort.field, 'down');}
     } else {
-      this.props.onGetEvents(this.props.page, 'date_start', this.props.adminEventsSort.dierection);
+      this.getSortEvents(this.props.page, 'date_start', this.props.adminEventsSort.dierection);
     }
 
   }
@@ -94,7 +107,7 @@ class AdminEventsTable extends Component {
             return (
                 <table className="table table-bordered table-sm table-striped">
                   <thead className="thead-dark">
-                    <tr>
+                    <tr align="center" valign="center">
                       <th scope="col">User</th>
                       {this.rendHeaderName()}
                       <th scope="col">Описание</th>
@@ -120,11 +133,12 @@ class AdminEventsTable extends Component {
 export default connect(
   state => ({
     adminEvents: state.adminEvents,
-    adminEventsSort: state.adminEventsSort
+    adminEventsSort: state.adminEventsSort,
+    eventsFilter: state.adminEventsFilter
   }),
   dispatch => ({
-    onGetEvents: (page, field, direction) => {
-      dispatch(GetAllEvents(page, field, direction));
+    onGetEvents: (page, field, direction, deleted) => {
+      dispatch(GetAllEvents(page, field, direction, deleted));
       dispatch({ type: 'CHANGE_PAGE_ADMIN_EVENTS', payload: page });
     },
     onSortName: () => {
