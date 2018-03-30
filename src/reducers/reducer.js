@@ -6,6 +6,7 @@ import homepageNumber from './homepageNumber';
 import userEvents from './userEvents';
 import userEventsSort from './userEventsSort';
 import editableEvent from './editableEvent';
+import userBanned from './userBanned';
 
 import adminEventsNumber from './adminReducers/adminEventsNumber';
 import adminEventsSort from './adminReducers/adminEventsSort';
@@ -21,6 +22,7 @@ const reducers = {
   userEvents,
   userEventsSort,
   editableEvent,
+  userBanned,
   adminEventsFilter,
   adminEvents,
   adminEventsNumber,

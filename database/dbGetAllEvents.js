@@ -9,27 +9,29 @@ mongoose.Promise = global.Promise;
 
 var Event = mongoose.model("Event", eventScheme);
 
-const dbGetEvents = (page, pageSize, sortField, deleted, callback) => {
+const dbGetEvents = (page, pageSize, sortField, deleted, username, callback) => {
 
     const skiped = pageSize * (page - 1);
     var countEvents = 0;
-
-    Event.count({}, function( err, count){
-      countEvents = count;
-    });
 
     if (sortField[0] === "!") {
       sortField = '-' + sortField.substring(1);
     }
 
-    console.log(deleted);
-
     if (deleted === 'true') {
-      Event.find({}).sort(sortField).skip(skiped).limit(10).then( (doc) => {
+
+      Event.count({user: {$regex : '.*' + username + '.*', $options: "$i"}}, function( err, count){
+        countEvents = count;
+      });
+      Event.find({user: {$regex : '.*' + username + '.*', $options: "$i"}}).sort(sortField).skip(skiped).limit(10).then( (doc) => {
          callback(doc, countEvents);
        });
+
     } else {
-      Event.find({deleted: false}).sort(sortField).skip(skiped).limit(10).then( (doc) => {
+      Event.count({user: {$regex : '.*' + username + '.*', $options: "$i"}, deleted: false}, function( err, count){
+        countEvents = count;
+      });
+      Event.find({user: {$regex : '.*' + username + '.*', $options: "$i"}, deleted: false}).sort(sortField).skip(skiped).limit(10).then( (doc) => {
          callback(doc, countEvents);
        });
     }

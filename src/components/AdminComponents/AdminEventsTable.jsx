@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { withRouter } from 'react-router-dom';
 import GetAllEvents from '../../reducer-actions/getAllEvents';
 import AdminEvent from './AdminEvent';
 
@@ -10,13 +10,15 @@ class AdminEventsTable extends Component {
     constructor(props) {
       super(props);
       this.getEvents();
+      this.state = ({redirect: false});
     }
 
   getEvents() {
     this.props.onGetEvents(this.props.page,
                            this.props.adminEventsSort.field,
                            this.props.adminEventsSort.dierection,
-                           this.props.eventsFilter.deletedVisible
+                           this.props.eventsFilter.deletedVisible,
+                           this.props.eventsFilter.username
     );
   }
 
@@ -24,7 +26,8 @@ class AdminEventsTable extends Component {
     this.props.onGetEvents(page,
                            field,
                            direction,
-                           this.props.eventsFilter.deletedVisible);
+                           this.props.eventsFilter.deletedVisible,
+                           this.props.eventsFilter.username);
   }
 
   rendHeaderName(){
@@ -82,8 +85,16 @@ class AdminEventsTable extends Component {
 
   rendEvents() {
     var arr = [];
-
-       this.props.adminEvents.map(function(el) {
+    /*console.log(this.props.page);
+      if (this.props.adminEvents.length === 0 && this.props.page !== 1) {
+       this.props.history.push('/admin/1');
+       console.log('редирект');
+     } else if (this.props.adminEvents.length === 0 && this.props.page === 1) {
+       return arr;
+     } else if (this.props.adminEvents[0].name === 'none') {
+       return arr;
+     }*/
+       this.props.adminEvents.map((el) => {
          arr.push(
            <AdminEvent key={el._id}
                       id={el._id}
@@ -95,6 +106,7 @@ class AdminEventsTable extends Component {
                       dateStart={el.date_start}
                       dateEnd={el.date_end}
                       deleted={el.deleted}
+                      getEvents={this.getEvents.bind(this)}
            />);
 
         });
@@ -130,16 +142,16 @@ class AdminEventsTable extends Component {
 
 }
 
-export default connect(
+export default withRouter(connect(
   state => ({
     adminEvents: state.adminEvents,
     adminEventsSort: state.adminEventsSort,
     eventsFilter: state.adminEventsFilter
   }),
   dispatch => ({
-    onGetEvents: (page, field, direction, deleted) => {
-      dispatch(GetAllEvents(page, field, direction, deleted));
-      dispatch({ type: 'CHANGE_PAGE_ADMIN_EVENTS', payload: page });
+    onGetEvents: (page, field, direction, deleted, username) => {
+      
+      dispatch(GetAllEvents(page, field, direction, deleted, username));
     },
     onSortName: () => {
         dispatch({ type: 'ADMIN_CHANGE_SORT_EVENTS', payload: 'name' });
@@ -148,4 +160,4 @@ export default connect(
         dispatch({ type: 'ADMIN_CHANGE_SORT_EVENTS', payload: 'date_start' });
     }
   })
-)(AdminEventsTable);
+)(AdminEventsTable));

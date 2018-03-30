@@ -93,5 +93,10 @@ class UserHeader extends Component {
 export default connect(
   state => ({
     homepageNumber: state.homepageNumber
+  }),
+  dispatch => ({
+    onLogOut: () => {
+      dispatch({type: 'USER_BAN', payload: false});
+    }
   })
 )(UserHeader);

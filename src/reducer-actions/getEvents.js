@@ -1,3 +1,5 @@
+import deleteCookie from '../components/cookie/deleteCookie'
+
 const request = (page, field, direction) => {
   return new Promise((resolve, reject) => {
 
@@ -19,8 +21,16 @@ const request = (page, field, direction) => {
 const GetEvents = (page, field, direction) => dispatch=> {
       request(page, field, direction).then( (resolve) => {
           const data = JSON.parse(resolve);
-          dispatch({type: 'FETCH_EVENTS_SUCCESS', payload: data.events});
-          dispatch({type: 'CHANGE_COUNT_PAGE', payload: data.count});
+
+          if (data.message === 'banned') {
+            console.log(data);
+            deleteCookie('token');
+            dispatch({type: 'USER_BAN', payload: true});
+          } else {
+            dispatch({type: 'FETCH_EVENTS_SUCCESS', payload: data.events});
+            dispatch({type: 'CHANGE_COUNT_PAGE', payload: data.count});
+          }
+
       });
 }
 

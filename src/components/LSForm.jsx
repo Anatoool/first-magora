@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 
+import { connect } from 'react-redux';
+
 import '../../styles/login.scss';
 
 class LSForm extends Component {
@@ -10,6 +12,11 @@ class LSForm extends Component {
   constructor(props) {
     super(props);
     this.state = { isLogin: true };
+  }
+
+  componentWillMount() {
+    console.log('mount');
+    this.props.onMount();
   }
 
   changeLoginState() {
@@ -72,5 +79,13 @@ class LSForm extends Component {
 
 // Decorate the form component
 
-
-export default LSForm;
+export default connect(
+  state => ({
+    userBanned: state.userBanned
+  }),
+  dispatch => ({
+    onMount: () => {
+      dispatch({ type: 'USER_BAN', payload: false });
+    }
+  })
+)(LSForm);

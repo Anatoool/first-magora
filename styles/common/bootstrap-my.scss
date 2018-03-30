@@ -1,3 +1,7 @@
-.container, .container-fluid {
+.container, .container-fluid, .row {
   padding: 0px;
 }
+
+body, .modal {
+    padding: 0 0 0 0 !important;
+ }

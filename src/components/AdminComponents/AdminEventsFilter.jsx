@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { withRouter, Redirect } from 'react-router-dom';
 import GetAllEvents from '../../reducer-actions/getAllEvents';
 
 class adminEventsFilter extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {timerId: '123'}
   }
 
   renderCheckbox() {
@@ -18,14 +19,38 @@ class adminEventsFilter extends Component {
   }
 
   changeDeleted () {
+    this.props.history.push('/admin/1');
     const page = this.props.adminEventsNumber.currentNumber;
     const field = this.props.adminEventsSort.field;
     const dierection = this.props.adminEventsSort.dierection;
     const deleted = this.props.eventsFilter.deletedVisible;
-    this.props.onChangeCheckbox(page, field, dierection, !deleted);
+    const username = this.props.eventsFilter.username;
+    this.props.onChangeCheckbox(page, field, dierection, !deleted, username);
+
+  }
+
+  getEvents() {
+    this.props.history.push('/admin/1');
+    const page = this.props.adminEventsNumber.currentNumber;
+    const field = this.props.adminEventsSort.field;
+    const dierection = this.props.adminEventsSort.dierection;
+    const deleted = this.props.eventsFilter.deletedVisible;
+    const username = this.filterNameInput.value;
+    this.props.onRequestNameFilter(page, field, dierection, deleted, username);
+    //this.props.history.push();
+  }
+
+  nameFilterChange () {
+
+    this.props.onChangeNameFilter(this.filterNameInput.value);
+    clearTimeout(this.state.timerId);
+    const timerId = setTimeout(this.getEvents.bind(this), 1000);
+    this.setState({timerId: timerId});
+
   }
 
   render () {
+
     return (
           <div className="row" style={{ maxWidth: '100%', paddingLeft: '10px' }}>
               <div className="col-12">
@@ -35,7 +60,11 @@ class adminEventsFilter extends Component {
                 <div className="input-group-prepend">
                   <span className="input-group-text" id="inputGroup-sizing-sm">Username</span>
                 </div>
-                <input type="text" className="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                <input onChange={this.nameFilterChange.bind(this)}
+                       ref={(input) => this.filterNameInput = input}
+                       defaultValue={this.props.eventsFilter.username}
+                       type="text" className="form-control"
+                       aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
               </div>
               <div className="col-5" style={{ paddingTop: '4px' }}>
                 <span style={{verticalAlign: 'top', marginRight: '4px', fontSize: '1em'}}>Show deleted:</span>
@@ -50,15 +79,23 @@ class adminEventsFilter extends Component {
 
 }
 
-export default connect(
+export default withRouter(connect(
   state => ({
     eventsFilter: state.adminEventsFilter,
     adminEventsNumber: state.adminEventsNumber,
     adminEventsSort: state.adminEventsSort
   }), dispatch => ({
-    onChangeCheckbox: (number, field, direction, deleted) => {
+    onChangeCheckbox: (number, field, direction, deleted, username) => {
       dispatch({ type: 'ADMIN_CHANGE_EVENTS_FILTER_DELETED' });
-      dispatch(GetAllEvents(number, field, direction, deleted));
+      dispatch({ type: 'CHANGE_PAGE_ADMIN_EVENTS', payload: 1 });//
+      dispatch(GetAllEvents(1, field, direction, deleted, username));
+    },
+    onChangeNameFilter: (value) => {
+      dispatch({ type: 'ADMIN_CHANGE_EVENTS_FILTER_USERNAME', payload: value});
+    },
+    onRequestNameFilter: (number, field, direction, deleted, username) => {
+      dispatch({ type: 'CHANGE_PAGE_ADMIN_EVENTS', payload: 1 });
+      dispatch(GetAllEvents(1, field, direction, deleted, username));
     }
   })
-)(adminEventsFilter);
+)(adminEventsFilter));

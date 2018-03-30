@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import GetAllEvents from '../../reducer-actions/getAllEvents';
 
@@ -17,7 +17,8 @@ class EventsPagination extends Component {
     this.setState({currentNumber: number});
     this.props.onClickLink(number, this.props.adminEventsSort.field,
                            this.props.adminEventsSort.dierection,
-                           this.props.eventsFilter.deletedVisible);
+                           this.props.eventsFilter.deletedVisible,
+                           this.props.eventsFilter.username);
   }
 
   renderLinks(number){
@@ -42,6 +43,7 @@ class EventsPagination extends Component {
   }
 
   render () {
+
     return (
         <div className='container-fluid'>
           <div className='row' style={{maxWidth: '100%'}}>
@@ -62,9 +64,9 @@ export default connect(
     eventsFilter: state.adminEventsFilter
   }),
   dispatch => ({
-    onClickLink: (number, field, direction, deleted) => {
+    onClickLink: (number, field, direction, deleted, username) => {
       dispatch({ type: 'CHANGE_PAGE_ADMIN_EVENTS', payload: number });
-      dispatch(GetAllEvents(number, field, direction, deleted));
+      dispatch(GetAllEvents(number, field, direction, deleted, username));
     }
   })
 )(EventsPagination);

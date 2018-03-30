@@ -5,18 +5,20 @@ import cookieParser from 'cookie-parser';
 import { addUser, findUser } from './database/db';
 
 
-import getProfileFromToken from './server/middleware/getProfileFromToken';
-import userGetEvents from './server/middleware/userGetEvents';
-import userAddEvent from './server/middleware/userAddEvent';
-import userEditProfile from './server/middleware/userEditProfile';
-import userEditEvent from './server/middleware/userEditEvent';
-import usersGetCount from './server/middleware/usersGetCount';
-import userGetEvent from './server/middleware/userGetEvent';
+import getProfileFromToken from './server/requests/getProfileFromToken';
+import userGetEvents from './server/requests/userGetEvents';
+import userAddEvent from './server/requests/userAddEvent';
+import userEditProfile from './server/requests/userEditProfile';
+import userEditEvent from './server/requests/userEditEvent';
+import usersGetCount from './server/requests/usersGetCount';
+import userGetEvent from './server/requests/userGetEvent';
 
-import adminGetEvents from './server/middleware/adminGetEvents';
-import adminGetEvent from './server/middleware/adminGetEvent';
-import adminEditEvent from './server/middleware/adminEditEvent';
-import adminDeleteEvent from './server/middleware/adminDeleteEvent';
+import adminGetEvents from './server/requests/adminGetEvents';
+import adminGetEvent from './server/requests/adminGetEvent';
+import adminEditEvent from './server/requests/adminEditEvent';
+import adminDeleteEvent from './server/requests/adminDeleteEvent';
+
+import checkUserStatus from './server/middleware/checkUserStatus';
 
 import preLaunch from './server/preLaunch';
 preLaunch();
@@ -33,13 +35,9 @@ app.use(cookieParser());
 app.use(express.static(`${__dirname}/public`));
 
 
+app.use('*/user/*', checkUserStatus);
 
-var myLogger = function (req, res, next) {
-  console.log('LOGGED');
-  next();
-};
 
-app.use('/login', myLogger);
 app.post('/login', (req, res) => {
 
   //var userName=req.body.email;
@@ -51,34 +49,41 @@ app.post('/login', (req, res) => {
   findUser(login, function(doc) {
 
     if (doc === null) {
-      res.json({ success: false});
+      res.json({ success: 'false'});
     } else {
-      if (doc.password === password) {
 
-        const payload = {
-          role: doc.role,
-          login: doc.login
-        };
+          if (doc.password === password) {
 
-        var token = jwt.sign(payload, 'my-secret', {
-         expiresIn: "10h" // expires in 24 hours
-       });
-       console.log(doc.role);
-        res.json({ success: true, token: token});
+            if (doc.role !== 'banned') {
+              const payload = {
+                role: doc.role,
+                login: doc.login
+              };
 
-      } else {
-        res.json({ success: false});
-      }
+              var token = jwt.sign(payload, 'my-secret', {
+               expiresIn: "10h" // expires in 24 hours
+             });
+             console.log(doc.role);
+              res.json({ success: true, token: token});
+            } else {
+              res.json({ success: true, message: 'banned'});
+            }
+
+
+          } else {
+            res.json({ success: false});
+          }
+
     }
 
   });
-  //console.log(req.body);
 
 });
 
 app.get('/api/users/count', (req, res) => {
   usersGetCount(req, res);
 });
+
 
 app.use('/profile/get', getProfileFromToken);
 app.post('/profile/get', (req, res) => {

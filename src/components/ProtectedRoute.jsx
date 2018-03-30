@@ -48,6 +48,11 @@ class ProtectedRoute extends Component {
   }
 
   render() {
+
+      if (this.props.userBanned === true) {
+        return <Redirect to='/' />; 
+      }
+
       if (this.state.role === 'wait') {
         this.checkRole();
         return  (<div>
@@ -70,7 +75,8 @@ class ProtectedRoute extends Component {
 
 export default connect(
   state => ({
-    userProfile: state.userProfile
+    userProfile: state.userProfile,
+    userBanned: state.userBanned
   }),
   dispatch => ({
     onLoadProfile: (response) => {

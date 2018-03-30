@@ -56,6 +56,7 @@ class AdminEvent extends Component {
   deleteEvent() {
     deleteEvent(this.props.id).then( () => {
       this.setState({deleted: true});
+      this.props.getEvents();
     }, (status, statusText) => {
       console.log('Status:', status);
       console.log('statusText:', statusText);
