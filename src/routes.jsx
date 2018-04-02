@@ -14,6 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Admin from './components/AdminComponents/Admin';
 import AdminProtectedRoute from './components/AdminComponents/AdminProtectedRoute';
 import AdminEditevent from './components/AdminComponents/AdminEditevent';
+import Users from './components/AdminComponents/Users';
 
 import Homepage from './components/Homepage';
 import Addevent from './components/Addevent';
@@ -31,7 +32,9 @@ const Routes = () => (
           <Route exact path="/" component={LSForm}/>
 
           <AdminProtectedRoute path="/admin/:number" component={Admin}/>
-          <AdminProtectedRoute path="/admineditevent/:id" component={AdminEditevent}/>
+          <AdminProtectedRoute path="/users/" component={Users}/>
+          <AdminProtectedRoute path="/event/admin/:id" component={AdminEditevent}/>
+
 
           <ProtectedRoute path="/homepage/:number" component={Homepage}/>
           <ProtectedRoute path="/addevent" component={Addevent}/>

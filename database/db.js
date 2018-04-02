@@ -6,22 +6,21 @@ mongoose.Promise = global.Promise;
 import userScheme from './schemes/userScheme';
 // установка схемы
 
-
 var User = mongoose.model("User", userScheme);
 
-function addUser(login, password, email) {
-
+function addUser(login, password, email, callback) {
+  console.log('addUser');
   var user = new User({
       login: login,
       password: password,
       email: email,
-      role: 'user'
+      role: 'user',
+      name: ''
   });
 
   user.save()
   .then(function(doc){
-      console.log("Сохранен объект", doc);
-      // отключение от базы данных
+      callback(doc);
   })
   .catch(function (err){
       console.log(err);

@@ -50,7 +50,7 @@ class ProtectedRoute extends Component {
   render() {
 
       if (this.props.userBanned === true) {
-        return <Redirect to='/' />; 
+        return <Redirect to='/' />;
       }
 
       if (this.state.role === 'wait') {

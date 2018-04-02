@@ -87,6 +87,7 @@ class UserEventsTable extends Component {
   render () {
 
             return (
+              <div>
                 <table className="table">
                   <thead className="thead-dark">
                     <tr>
@@ -106,6 +107,7 @@ class UserEventsTable extends Component {
                   </tbody>
                 </table>
 
+              </div>
     );
   }
 

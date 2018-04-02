@@ -7,15 +7,37 @@ import { connect } from 'react-redux';
 
 import '../../styles/login.scss';
 
+const sendUser = (values) => {
+
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+
+    const valuesJSON = JSON.stringify(values);
+
+    var body = {
+      user: valuesJSON,
+    };
+
+    body = JSON.stringify(body);
+
+    xhr.open('POST', '/api/users');
+
+    xhr.onload = () => resolve(xhr.responseText);
+    xhr.onerror = () => reject(xhr.statusText);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(body);
+  });
+
+}
+
 class LSForm extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { isLogin: true };
+    this.state = { isLogin: true, registration: false };
   }
 
   componentWillMount() {
-    console.log('mount');
     this.props.onMount();
   }
 
@@ -29,25 +51,18 @@ class LSForm extends Component {
 
   handleSignUp(values) {
 
-    let user = {
+    const user = {
       login: values.login,
       password: values.password,
       email: values.email
     };
 
-    /*let usersJSON = localStorage.getItem('Users');//Получаем массив
-    let usersArray = JSON.parse(usersJSON);// Парсим
-    usersArray.push(user);//Add user to array
-    //console.log(usersArray);
-    usersJSON = JSON.stringify(usersArray);//code to JSON
-    localStorage.setItem('Users', usersJSON);//Rewrite Users store*/
+    sendUser(user).then((resolve)=> {
 
-    // let usersJSON = JSON.stringify(users);
-    // localStorage.setItem('Users', usersJSON);
-    // console.log( JSON.parse( localStorage.getItem('Users') ) );
+      this.setState({registration: true});
+      this.changeLoginState();
+    });
 
-    console.log(user, 'SignUp');
-    console.log(values.password);
   }
 
   render() {
@@ -59,7 +74,16 @@ class LSForm extends Component {
             <li className="tab" onClick={ this.changeLoginState.bind(this) }>Sign Up</li>
             <li className="tab active">Log In</li>
           </ul>
-            <LoginForm onSubmit={this.handleLogin}/>
+
+          {this.state.registration === true ?
+            <div className="row justify-content-center">
+              <div className="alert alert-primary col-10 col-md-6" style={{maxWidth: '100%'}} role="alert">
+                Вы успешно зарегистрированы!
+              </div>
+            </div>
+            : []
+          }
+          <LoginForm onSubmit={this.handleLogin}/>
         </div>
       );
     } else {
@@ -69,7 +93,7 @@ class LSForm extends Component {
             <li className="tab active">Sign Up</li>
             <li className="tab" onClick={ this.changeLoginState.bind(this) }>Log In</li>
           </ul>
-            <SignUpForm onSubmit={this.handleSignUp}/>
+            <SignUpForm onSubmit={this.handleSignUp.bind(this)}/>
         </div>
       );
     }

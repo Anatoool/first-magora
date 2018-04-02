@@ -1,52 +1,28 @@
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-/*const request = (login) => {
+const request = (login) => {
 
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
 
-    xhr.open('GET', '/login');
+    xhr.open('GET', '/api/users/count?login=' + login);
 
     xhr.onload = () => resolve(xhr.responseText);
     xhr.onerror = () => reject(xhr.statusText);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(body);
+    xhr.send();
   });
-}*/
-
-function loginVerify(login) {
-
-  var busy = false;
-  if ( login === "admin" ) {
-    busy = true;
-  }
-
-  return busy;
 }
 
-const asyncValidate = (values/*, dispatch */) => {
 
-  var loginBusy = false;
-  loginBusy = loginVerify(values.login);
-  /*let usersJSON = localStorage.getItem('Users');//Получаем массив
-  let usersArray = JSON.parse(usersJSON);// Парсим
+const asyncValidate = (values) => {
 
-
-
-
-  let usersCount = usersArray.length;
-  for (var i = 0; i < usersCount; i++) {
-    if (usersArray[i].login == values.login) {
-      loginBusy = true;
-    }
-  }*/
-
-
-  return sleep(2000) // simulate server latency
-    .then(() => {
-      if (loginBusy) {
+  return request(values.login)
+    .then((resolve) => {
+      const data = JSON.parse(resolve);
+      if (data.busy === true) {
         throw { login: 'Логин занят!' }
       }
+    }, ()=> {
+      alert('Нет связи с сервером!');
     });
 }
 

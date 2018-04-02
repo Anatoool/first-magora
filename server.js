@@ -4,13 +4,14 @@ var bodyParser = require("body-parser");
 import cookieParser from 'cookie-parser';
 import { addUser, findUser } from './database/db';
 
+import usersGetCount from './server/requests/usersGetCount';
+import usersRegistration from './server/requests/usersRegistration';
 
 import getProfileFromToken from './server/requests/getProfileFromToken';
 import userGetEvents from './server/requests/userGetEvents';
 import userAddEvent from './server/requests/userAddEvent';
 import userEditProfile from './server/requests/userEditProfile';
 import userEditEvent from './server/requests/userEditEvent';
-import usersGetCount from './server/requests/usersGetCount';
 import userGetEvent from './server/requests/userGetEvent';
 
 import adminGetEvents from './server/requests/adminGetEvents';
@@ -37,14 +38,11 @@ app.use(express.static(`${__dirname}/public`));
 
 app.use('*/user/*', checkUserStatus);
 
-
+//Проверка логина и пароля для входа(Плюс проверка забанен ли пользователь)
 app.post('/login', (req, res) => {
 
-  //var userName=req.body.email;
   const login = req.body.login;
   const password = req.body.password;
-
-  //console.log(req.body);
 
   findUser(login, function(doc) {
 
@@ -80,8 +78,14 @@ app.post('/login', (req, res) => {
 
 });
 
+
+//Узнать есть ли пользователи с таким лгином для валидации регистрации
 app.get('/api/users/count', (req, res) => {
   usersGetCount(req, res);
+});
+
+app.post('/api/users', (req, res) => {
+  usersRegistration(req, res);
 });
 
 

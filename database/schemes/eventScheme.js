@@ -10,7 +10,10 @@ var eventScheme = new Schema({
     place: String,
     date_start: Date,
     date_end: Date,
-    deleted: Boolean
+    deleted: {
+      type: Boolean,
+      default: false
+    }
   },
   { versionKey: false }
 );

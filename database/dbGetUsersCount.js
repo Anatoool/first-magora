@@ -9,10 +9,10 @@ mongoose.Promise = global.Promise;
 
 var User = mongoose.model("User", userScheme);
 
-const dbGetUsersCount = (user, callback) => {
+const dbGetUsersCount = (login, callback) => {
 
-    User.count({user: user}, function( err, count){
-      callback(count);
+    User.count({login: { $regex: new RegExp("^" + login.toLowerCase() + "$", "i") }}, function( err, count){
+      callback(err, count);
     });
 
 }

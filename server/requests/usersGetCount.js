@@ -3,12 +3,14 @@ import dbGetUsersCount from '../../database/dbGetUsersCount';
 const usersGetCount = function (req, res) {
 
         const login = req.query.login;
-
-         dbGetUsersCount(login, (countUsers) => {
-           res.status(200).json({
-                count: countUsers,
-                message: 'Кол-во юзеров стаким логином'
-            });
+         dbGetUsersCount(login, (err, countUsers) => {
+           if (!err) {
+             if (countUsers > 0) {
+               res.status(200).json({busy: true});
+             } else {
+               res.status(200).json({busy: false});
+             }
+           }
          });
 
 };

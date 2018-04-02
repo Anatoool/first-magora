@@ -82,7 +82,7 @@ class AdminEvent extends Component {
           <td key="6">{dateStart}</td>,
           <td key="7">{dateEnd}</td>,
           <td key="8" align="center">
-            <Link to={'/admineditevent/' + this.props.id} style={{marginTop: '3px'}} className="btn btn-secondary btn-sm">Edit</Link>
+            <Link to={'/event/admin/' + this.props.id} style={{marginTop: '3px'}} className="btn btn-secondary btn-sm">Edit</Link>
             <button className="btn btn-danger btn-sm"
                     data-toggle="modal"
                     style={{marginTop: '3px'}}
@@ -126,7 +126,7 @@ class AdminEvent extends Component {
           <td key="6" className="table-danger">{dateStart}</td>,
           <td key="7" className="table-danger">{dateEnd}</td>,
           <td key="8" align="center" className="table-danger">
-            <Link to={'/admineditevent/' + this.props.id}
+            <Link to={'/event/admin/' + this.props.id}
                   className="btn btn-sm btn-secondary"
                   style={{marginTop: '3px'}}>Edit</Link>
           </td>
