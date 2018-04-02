@@ -85,15 +85,6 @@ class AdminEventsTable extends Component {
 
   rendEvents() {
     var arr = [];
-    /*console.log(this.props.page);
-      if (this.props.adminEvents.length === 0 && this.props.page !== 1) {
-       this.props.history.push('/admin/1');
-       console.log('редирект');
-     } else if (this.props.adminEvents.length === 0 && this.props.page === 1) {
-       return arr;
-     } else if (this.props.adminEvents[0].name === 'none') {
-       return arr;
-     }*/
        this.props.adminEvents.map((el) => {
          arr.push(
            <AdminEvent key={el._id}
@@ -150,7 +141,7 @@ export default withRouter(connect(
   }),
   dispatch => ({
     onGetEvents: (page, field, direction, deleted, username) => {
-      
+
       dispatch(GetAllEvents(page, field, direction, deleted, username));
     },
     onSortName: () => {

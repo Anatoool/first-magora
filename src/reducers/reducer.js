@@ -12,6 +12,7 @@ import adminEventsNumber from './adminReducers/adminEventsNumber';
 import adminEventsSort from './adminReducers/adminEventsSort';
 import adminEvents from './adminReducers/adminEvents';
 import adminEventsFilter from './adminReducers/adminEventsFilter';
+import users from './adminReducers/Users';
 
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -27,6 +28,7 @@ const reducers = {
   adminEvents,
   adminEventsNumber,
   adminEventsSort,
+  users,
 
   form: formReducer     // <---- Mounted at 'form'
 };

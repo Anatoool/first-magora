@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import AdminHeader from './AdminHeader';
 //import EventsPagination from './EventsPagination';
-// import AdminEventsTable from './AdminEventsTable';
+import UsersTable from './UsersTable';
 // import AdminEventsFilter from './AdminEventsFilter';
 
 class Users extends Component {
@@ -11,6 +11,7 @@ class Users extends Component {
     return (
       <div>
         <AdminHeader login={this.props.login} page="users"/>
+        <UsersTable />
       </div>
     );
   }

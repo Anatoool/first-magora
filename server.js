@@ -18,6 +18,9 @@ import adminGetEvents from './server/requests/adminGetEvents';
 import adminGetEvent from './server/requests/adminGetEvent';
 import adminEditEvent from './server/requests/adminEditEvent';
 import adminDeleteEvent from './server/requests/adminDeleteEvent';
+import adminGetUsers from './server/requests/adminGetUsers';
+import adminDeleteUser from './server/requests/adminDeleteUser';
+import adminUndeleteUser from './server/requests/adminUndeleteUser';
 
 import checkUserStatus from './server/middleware/checkUserStatus';
 
@@ -84,10 +87,26 @@ app.get('/api/users/count', (req, res) => {
   usersGetCount(req, res);
 });
 
+//Регистрация пользователя
 app.post('/api/users', (req, res) => {
   usersRegistration(req, res);
 });
 
+//Получение пользователей
+app.get('/api/admin/users', (req, res) => {
+  adminGetUsers(req, res);
+});
+
+
+//Удаление пользователя
+app.delete('/api/users/:id', (req, res) => {
+  adminDeleteUser(req, res);
+});
+
+//--
+app.put('/api/users/:id', (req, res) => {
+  adminUndeleteUser(req, res);
+});
 
 app.use('/profile/get', getProfileFromToken);
 app.post('/profile/get', (req, res) => {
