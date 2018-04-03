@@ -24,6 +24,10 @@ class Pagination extends Component {
 
     var arr = [];
 
+    if (countLinks === 1) {
+      return arr;
+    }
+
     for (var i = 1; i <= countLinks; i++) {
       if ( i !== currentPage) {
         arr.push(

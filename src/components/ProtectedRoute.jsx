@@ -63,7 +63,7 @@ class ProtectedRoute extends Component {
                       render={ () => <this.props.component page={this.props.computedMatch.params.number}
                       params={this.props.computedMatch.params} login = {this.state.login}/> }/>;
       } else if (this.state.role === 'admin') {
-        return <Redirect to='/admin/1' />;
+        return <Redirect to='/admin/events-1' />;
       } else {
         deleteCookie('token');
         return <Redirect to='/' />;

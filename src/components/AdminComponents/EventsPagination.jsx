@@ -23,17 +23,22 @@ class EventsPagination extends Component {
 
   renderLinks(number){
     var arr = [];
+
+    if (number === 1) {
+      return arr;
+    }
+
     var currentNumber = this.props.adminEventsNumber.currentNumber;
     for (var i = 1; i <= number; i++) {
       if ( i !== currentNumber) {
         arr.push(
           <li className="page-item" key = {i}>
-            <Link onClick={this.clickLink.bind(this)} className="page-link" to={'/admin/' + i}>{i}</Link>
+            <Link onClick={this.clickLink.bind(this)} className="page-link" to={'/admin/events-' + i}>{i}</Link>
           </li>);
       } else {
         arr.push(
           <li className="page-item active" key = {i}>
-            <Link className="page-link" to={'/admin/' + i}>{i}</Link>
+            <Link className="page-link" to={'/admin/events-' + i}>{i}</Link>
           </li>);
       }
 

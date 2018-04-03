@@ -20,6 +20,11 @@ class Pagination extends Component {
 
   renderLinks(number){
     var arr = [];
+
+    if (number === 1) {
+      return arr;
+    }
+
     var currentNumber = this.props.homepageNumber.currentNumber;
     for (var i = 1; i <= number; i++) {
       if ( i !== currentNumber) {

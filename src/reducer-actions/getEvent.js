@@ -1,4 +1,6 @@
-const request = (id) => {
+import httpUserRequest from '../components/requests/httpUserRequest';
+
+/*const request = (id) => {
   return new Promise((resolve, reject) => {
 
         const xhr = new XMLHttpRequest();
@@ -10,10 +12,38 @@ const request = (id) => {
 
         xhr.send();
   });
-}
+}*/
 
-const GetEvent = (id, editevent) => dispatch=> {
-      request(id).then( (resolve) => {
+const GetEvent = (id, editevent) => dispatch => {
+
+      const URL = '/api/user/events/' + id;
+      var myInit = { method: 'GET'};
+
+      httpUserRequest(URL, myInit, dispatch).then((data) => {
+
+        const event = data.event;
+
+        if (event === null) {
+          editevent.setState({eventLoad: "impossible"});
+        }
+
+        const editable = {
+          name: event.name,
+          description: event.description,
+          importance: event.importance,
+          dateEnd: new Date(event.date_end),
+          dateStart: new Date(event.date_start),
+          address: event.place,
+          id: event._id
+        };
+
+        dispatch({type: 'SET_EDITABLE_EVENT', payload: editable});
+
+        editevent.setState({eventLoad: "yes"});
+
+      });
+}
+      /*request(id).then( (resolve) => {
           const data = JSON.parse(resolve);
 
           const event = data.event;
@@ -37,7 +67,7 @@ const GetEvent = (id, editevent) => dispatch=> {
           editevent.setState({eventLoad: "yes"});
       }, (reject) => {
         console.log(reject);
-      });
-}
+      });*/
+
 
 export default GetEvent;

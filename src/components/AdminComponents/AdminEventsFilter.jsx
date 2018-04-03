@@ -19,7 +19,7 @@ class adminEventsFilter extends Component {
   }
 
   changeDeleted () {
-    this.props.history.push('/admin/1');
+    this.props.history.push('/admin/events-1');
     const page = this.props.adminEventsNumber.currentNumber;
     const field = this.props.adminEventsSort.field;
     const dierection = this.props.adminEventsSort.dierection;
@@ -30,7 +30,7 @@ class adminEventsFilter extends Component {
   }
 
   getEvents() {
-    this.props.history.push('/admin/1');
+    this.props.history.push('/admin/events-1');
     const page = this.props.adminEventsNumber.currentNumber;
     const field = this.props.adminEventsSort.field;
     const dierection = this.props.adminEventsSort.dierection;

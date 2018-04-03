@@ -13,8 +13,8 @@ class Admin extends Component {
       <div>
         <AdminHeader login={this.props.login} page="admin"/>
         <AdminEventsFilter />
-        <AdminEventsTable page={Number(this.props.page)}/>        
-        <EventsPagination startPage={Number(this.props.page)}/>
+        <AdminEventsTable page={Number(this.props.params.page)}/>
+        <EventsPagination startPage={Number(this.props.params.page)}/>
       </div>
     );
   }

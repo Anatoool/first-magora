@@ -103,7 +103,7 @@ app.delete('/api/users/:id', (req, res) => {
   adminDeleteUser(req, res);
 });
 
-//--
+//Восстановление пользователя
 app.put('/api/users/:id', (req, res) => {
   adminUndeleteUser(req, res);
 });

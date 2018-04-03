@@ -13,28 +13,28 @@ class AdminHeader extends Component {
     if (this.props.page === 'admin') {
       return (<ul className="navbar-nav">
         <li className="nav-item active">
-          <Link className="nav-link" to={'/admin/' + this.props.adminEventsNumber.currentNumber}>Events</Link>
+          <Link className="nav-link" to={'/admin/events-' + this.props.adminEventsNumber.currentNumber}>Events</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to='/users/'>Users</Link>
+          <Link className="nav-link" to='/admin/users/'>Users</Link>
         </li>
       </ul>);
     } else if (this.props.page === 'users') {
       return (<ul className="navbar-nav">
         <li className="nav-item">
-          <Link className="nav-link" to={'/admin/' + this.props.adminEventsNumber.currentNumber}>Events</Link>
+          <Link className="nav-link" to={'/admin/events-' + this.props.adminEventsNumber.currentNumber}>Events</Link>
         </li>
         <li className="nav-item active">
-          <Link className="nav-link" to='/users/'>Users</Link>
+          <Link className="nav-link" to='/admin/users/'>Users</Link>
         </li>
       </ul>);
     } else if (this.props.page === 'none') {
       return (<ul className="navbar-nav">
         <li className="nav-item">
-          <Link className="nav-link" to={'/admin/' + this.props.adminEventsNumber.currentNumber}>Events</Link>
+          <Link className="nav-link" to={'/admin/events-' + this.props.adminEventsNumber.currentNumber}>Events</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to='/users/'>Users</Link>
+          <Link className="nav-link" to='/admin/users/'>Users</Link>
         </li>
       </ul>);
     }
