@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
 
-// для работы с promise
-mongoose.Promise = global.Promise;
-
 import userScheme from './schemes/userScheme';
 // установка схемы
 

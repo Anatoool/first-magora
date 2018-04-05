@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 import dbAddEvent from '../../database/dbAddEvent';
 
-const userAddEvent = function (req, res, next) {
+const userAddEvent = function (req, res) {
   var token = req.body.token;
 
    if (token) {
@@ -35,7 +35,7 @@ const userAddEvent = function (req, res, next) {
          message: 'No token provided.'
      });
    }
-  next();
+
 };
 
 export default userAddEvent;

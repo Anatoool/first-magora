@@ -50,7 +50,6 @@ class Addevent extends Component {
     sendEvent(values).then( () => {
       this.setState({eventSent: true});
     });
-    console.log(values, 'submit');
   }
 
   render () {

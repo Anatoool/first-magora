@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken';
 
 import { findUser } from '../../database/db';
 
-const getProfileFromToken = function (req, res, next) {
-  
+const getProfileFromToken = function (req, res) {
+
   var token = req.body.token;
 
    if (token) {
@@ -24,7 +24,7 @@ const getProfileFromToken = function (req, res, next) {
          message: 'No token provided.'
      });
    }
-  next();
+
 };
 
 export default getProfileFromToken;

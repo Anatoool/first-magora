@@ -11,7 +11,7 @@
     "dev": " webpack-dashboard -- webpack-dev-server",
     "test": "export NODE_ENV=test && jest",
     "my": "webpack --watch --config webpack.config.js",
-    "my-serv": "nodemon --exec babel-node server.js"
+    "my-serv": "nodemon --exec babel-node ./server/server.js"
   },
   "repository": {
     "type": "git",

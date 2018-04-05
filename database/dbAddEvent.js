@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
 
-// для работы с promise
-mongoose.Promise = global.Promise;
-
 // установка схемы
 import eventScheme from './schemes/eventScheme';
 
