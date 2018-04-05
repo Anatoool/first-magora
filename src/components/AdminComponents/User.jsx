@@ -71,7 +71,7 @@ class User extends Component {
       return(
         [
           <td key="1" align="center">
-            <Link to={'/admin/events/1'} onClick={this.clickLink.bind(this)}>
+            <Link to={'/admin/events-1-name-up-true-' + this.props.login} onClick={this.clickLink.bind(this)}>
               {this.props.login}
             </Link>
           </td>,
@@ -114,7 +114,7 @@ class User extends Component {
       return(
         [
           <td key="1" className="table-danger" align="center">
-            <Link to={'/admin/events/1'} onClick={this.clickLink.bind(this)}>
+            <Link to={'/admin/events-1-name-up-true-' + this.props.login} onClick={this.clickLink.bind(this)}>
               {this.props.login}
             </Link>
           </td>,

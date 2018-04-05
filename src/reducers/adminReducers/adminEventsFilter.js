@@ -14,6 +14,10 @@ export default function adminEventsFilter(state = initialState, action){
     return Object.assign({}, state, {
         deletedVisible: !state.deletedVisible
       });
+  } else if (action.type === 'ADMIN_CHANGE_EVENTS_FILTER_DELETED_MOUNT') {
+    return Object.assign({}, state, {
+        deletedVisible: action.payload
+      });
   }
 
   return state;

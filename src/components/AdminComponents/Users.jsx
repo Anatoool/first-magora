@@ -11,7 +11,11 @@ class Users extends Component {
     return (
       <div>
         <AdminHeader login={this.props.login} page="users"/>
-        <UsersTable />
+        <UsersTable
+          page={Number(this.props.params.page)}
+          deleted={this.props.params.deleted}
+          namefilter={this.props.params.namefilter}
+        />
       </div>
     );
   }

@@ -14,11 +14,13 @@ class AdminEventsTable extends Component {
     }
 
   getEvents() {
+    const namefilter = (this.props.namefilter === '""' ? '' : this.props.namefilter);
+    console.log('getEvents', this.props.sortfield, this.props.direction);
     this.props.onGetEvents(this.props.page,
-                           this.props.adminEventsSort.field,
-                           this.props.adminEventsSort.dierection,
-                           this.props.eventsFilter.deletedVisible,
-                           this.props.eventsFilter.username
+                           this.props.sortfield,
+                           this.props.direction,
+                           this.props.deleted,
+                           namefilter
     );
   }
 
@@ -58,28 +60,61 @@ class AdminEventsTable extends Component {
 
   clickNameSort() {
 
+    var direction = '';
+
     this.props.onSortName();
     if (this.props.adminEventsSort.field === 'name') {
       if (this.props.adminEventsSort.dierection === 'down') {
-        this.getSortEvents(this.props.page, this.props.adminEventsSort.field, 'up');
-      } else {this.getSortEvents(this.props.page, this.props.adminEventsSort.field, 'down');}
+        direction = 'up';
+        this.getSortEvents(this.props.page, 'name', 'up');
+      } else {
+        direction = 'down';
+        this.getSortEvents(this.props.page, 'name', 'down');
+      }
     } else {
-      this.getSortEvents(this.props.page, 'name', this.props.adminEventsSort.dierection);
+      direction = this.props.adminEventsSort.dierection;
+      this.getSortEvents(this.props.page, 'name', direction);
     }
+
+    this.props.history.push(
+      '/admin/events' +
+      '-' + this.props.page +
+      '-' + 'name' +
+      '-' + direction +
+      '-' + this.props.deleted +
+      '-' + this.props.namefilter
+    );
 
   }
 
   clickDateSort() {
 
+    var direction = '';
+
     this.props.onSortDateStart();
+
 
     if (this.props.adminEventsSort.field === 'date_start') {
       if (this.props.adminEventsSort.dierection === 'down') {
-        this.getSortEvents(this.props.page, this.props.adminEventsSort.field, 'up');
-      } else {this.getSortEvents(this.props.page, this.props.adminEventsSort.field, 'down');}
+        direction = 'up';
+        this.getSortEvents(this.props.page, 'date_start', 'up');
+      } else {
+        direction = 'down';
+        this.getSortEvents(this.props.page,'date_start', 'down');
+      }
     } else {
+      direction = this.props.adminEventsSort.dierection;
       this.getSortEvents(this.props.page, 'date_start', this.props.adminEventsSort.dierection);
     }
+
+    this.props.history.push(
+      '/admin/events' +
+      '-' + this.props.page +
+      '-' + 'date_start' +
+      '-' + direction +
+      '-' + this.props.deleted +
+      '-' + this.props.namefilter
+    );
 
   }
 

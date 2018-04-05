@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import GetUsers from '../../reducer-actions/getUsers';
 
@@ -11,16 +12,38 @@ class UsersTable extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {currentPage: 1, showDeleted: true, loginFilter: ''};
-    this.props.onGetUsers(1, true, '');
+
+    const deleted = (this.props.deleted === 'true');
+    const namefilter = (this.props.namefilter === '""' ? '' : this.props.namefilter);
+    this.state = {currentPage: this.props.page, showDeleted: deleted, loginFilter: namefilter};
+
+    this.props.onGetUsers(this.props.page, deleted, namefilter);
   }
 
   paginaionClick(linkNumber) {
     this.setState({currentPage: Number(linkNumber)});
+
+    this.props.history.push(
+      '/admin/users' +
+      '-' + linkNumber +
+      '-' + this.props.deleted +
+      '-' + this.props.namefilter
+    );
+
     this.props.onGetUsers(linkNumber, this.state.showDeleted, this.state.loginFilter);
   }
 
   filterDeletedClick() {
+
+    const deleted = (this.state.showDeleted  ? 'false'  : 'true');
+
+    this.props.history.push(
+      '/admin/users' +
+      '-' + '1' +
+      '-' + deleted +
+      '-' + this.props.namefilter
+    );
+
     this.props.onGetUsers(1, !this.state.showDeleted, this.state.loginFilter);
     this.setState({currentPage: 1});
     this.setState({showDeleted: !this.state.showDeleted});
@@ -32,6 +55,16 @@ class UsersTable extends Component {
 
   filterLoginChange() {
     this.setState({currentPage: 1});
+
+    const loginFilter = (this.state.loginFilter === ''  ? '""'  : this.state.loginFilter);
+
+    this.props.history.push(
+      '/admin/users' +
+      '-' + '1' +
+      '-' + this.props.deleted +
+      '-' + loginFilter
+    );
+
     this.props.onGetUsers(1, this.state.showDeleted, this.state.loginFilter);
   }
 
@@ -64,6 +97,8 @@ class UsersTable extends Component {
               <UsersFilter filterDeletedClick={this.filterDeletedClick.bind(this)}
                             changeLoginFilter={this.changeLoginFilter.bind(this)}
                             filterLoginChange={this.filterLoginChange.bind(this)}
+                            defaultChecked = {this.state.showDeleted}
+                            defaultNameFilter={this.state.loginFilter}
               />
                 <table className="table table-bordered table-sm table-striped">
                   <thead className="thead-dark">
@@ -89,7 +124,7 @@ class UsersTable extends Component {
 
 }
 
-export default connect(
+export default withRouter(connect(
   state => ({
     users: state.users.users,
     usersCount: state.users.count
@@ -99,4 +134,4 @@ export default connect(
       dispatch(GetUsers(page, deleted, login));
     }
   })
-)(UsersTable);
+)(UsersTable));

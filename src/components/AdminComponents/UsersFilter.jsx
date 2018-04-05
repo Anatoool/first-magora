@@ -19,6 +19,14 @@ class UsersFilter extends Component {
     this.setState({timerId: timerId});
   }
 
+  renderToggle () {
+    if (this.props.defaultChecked) {
+      return <input onChange={this.changeDeleted.bind(this)} type="checkbox" defaultChecked/>;
+    } else {
+      return <input onChange={this.changeDeleted.bind(this)} type="checkbox"/>;
+    }
+  }
+
   render () {
 
     return (
@@ -33,12 +41,13 @@ class UsersFilter extends Component {
                 <input onChange={this.changeLoginFilter.bind(this)}
                        ref={(input) => this.filterNameInput = input}
                        type="text" className="form-control"
-                       aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+                       aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                       defaultValue={this.props.defaultNameFilter}/>
               </div>
               <div className="col-5" style={{ paddingTop: '4px' }}>
                 <span style={{verticalAlign: 'top', marginRight: '4px', fontSize: '1em'}}>Show deleted:</span>
                 <label className="switch">
-                  <input onChange={this.changeDeleted.bind(this)} type="checkbox"  defaultChecked/>;
+                  {this.renderToggle()}
                   <span className="slider round"></span>
                 </label>
               </div>

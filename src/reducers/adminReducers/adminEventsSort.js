@@ -29,8 +29,11 @@ export default function adminEventsSort(state = initialState, action){
         }
     }
 
-  } else if (action.type === '4to-to-eshe') {
-    return action.payload;
+  } else if (action.type === 'ADMIN_CHANGE_SORT_EVENTS_MOUNT') {
+    return {
+      field: action.payload.sortfield,
+      dierection: action.payload.direction
+    };
   }
   return state;
 }

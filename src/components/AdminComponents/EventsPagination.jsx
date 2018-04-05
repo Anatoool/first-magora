@@ -8,7 +8,7 @@ class EventsPagination extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentNumber: this.props.adminEventsNumber.currentNumber
+      currentNumber: this.props.startPage
     };
   }
 
@@ -33,12 +33,19 @@ class EventsPagination extends Component {
       if ( i !== currentNumber) {
         arr.push(
           <li className="page-item" key = {i}>
-            <Link onClick={this.clickLink.bind(this)} className="page-link" to={'/admin/events-' + i}>{i}</Link>
+            <Link className="page-link"
+              onClick={this.clickLink.bind(this)}
+              to={'/admin/events-' + i +
+              '-' + this.props.sortfield +
+              '-' + this.props.direction +
+              '-' + this.props.deleted +
+              '-' + this.props.namefilter}>
+            {i}</Link>
           </li>);
       } else {
         arr.push(
           <li className="page-item active" key = {i}>
-            <Link className="page-link" to={'/admin/events-' + i}>{i}</Link>
+            <div className="page-link">{i}</div>
           </li>);
       }
 

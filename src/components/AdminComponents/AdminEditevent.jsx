@@ -87,7 +87,7 @@ class AdminEditevent extends Component {
         </div>
       );
     } else {
-      return <Redirect to='/admin/events-1' />;
+      return <Redirect to='/admin/events-1-name-up-true-""' />;
     }
 
   }

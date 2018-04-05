@@ -31,8 +31,8 @@ const Routes = () => (
       <Switch>
           <Route exact path="/" component={LSForm}/>
 
-          <AdminProtectedRoute path="/admin/events-:page" component={Admin}/>
-          <AdminProtectedRoute path="/admin/users/" component={Users}/>
+          <AdminProtectedRoute path="/admin/events-:page-:sortfield-:direction-:deleted-:namefilter" component={Admin}/>
+          <AdminProtectedRoute path="/admin/users-:page-:deleted-:namefilter" component={Users}/>
           <AdminProtectedRoute path="/admin/event/:id" component={AdminEditevent}/>
 
 
