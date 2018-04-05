@@ -30,10 +30,7 @@ return request(values.login, values.password).then( (value) => {
 
   value = JSON.parse(value);
 
-
-      if (value.success !== true) {
-        throw new SubmissionError({ login: '', _error: 'Неверный логин или пароль!' });
-      } else if (value.success !== true) {
+    if (value.success !== true) {
         throw new SubmissionError({ password: '', _error: 'Неверный логин или пароль!' });
       } else {
 
@@ -43,12 +40,11 @@ return request(values.login, values.password).then( (value) => {
 
           var date = new Date(new Date().getTime() + 60 * 1000 * 600);//+10р
           document.cookie = "token=" +  value.token + "; path=/; expires=" + date.toUTCString();
-          console.log(value.role);
+
           this.setState({token: value.token});
         }
-        
-      }
 
+      }
 
 });
 

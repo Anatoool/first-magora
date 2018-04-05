@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {Route, Redirect} from 'react-router-dom';
 
-import getCookie from './cookie/getCookie';
-import deleteCookie from './cookie/deleteCookie';
+import getCookie from '../cookie/getCookie';
+import deleteCookie from '../cookie/deleteCookie';
 
 import { connect } from 'react-redux';
 

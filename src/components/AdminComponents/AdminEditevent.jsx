@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { Redirect } from 'react-router-dom';
 
-import adminGetEvent from '../../reducer-actions/adminGetEvent';
+import adminGetEvent from '../../actions/adminGetEvent';
 
 
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import GetEvents from '../reducer-actions/getEvents';
+import GetEvents from '../actions/getEvents';
 import UserEvent from './UserEvent';
 
 

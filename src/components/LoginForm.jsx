@@ -5,7 +5,7 @@ import submit from './validate/submitValidate';
 
 import { Redirect, Link } from 'react-router-dom';
 
-import getCookie from './cookie/getCookie';
+import getCookie from '../cookie/getCookie';
 
 
 // const renderField = ({ input, label, type, meta: { asyncValidating, touched, error } }) => (

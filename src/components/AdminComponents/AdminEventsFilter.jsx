@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import GetAllEvents from '../../reducer-actions/getAllEvents';
+import GetAllEvents from '../../actions/getAllEvents';
 
 class adminEventsFilter extends Component {
 

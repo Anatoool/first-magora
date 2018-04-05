@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import UserHeader from './UserHeader';
 import AddEventForm from './AddEventForm';
-
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import getCookie from './cookie/getCookie';
+import getCookie from '../cookie/getCookie';
 
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -12,32 +12,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import '../../styles/common/homepage.scss';
 
-const sendEvent = (values) => {
-
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-
-    const valuesJSON = JSON.stringify(values);
-    const token = getCookie('token');
-
-    var body = {
-      event: valuesJSON,
-      token: token
-    };
-
-    body = JSON.stringify(body);
-
-    xhr.open('POST', '/user/event/add');
-
-    xhr.onload = () => resolve(xhr.responseText);
-    xhr.onerror = () => reject(xhr.statusText);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(body);
-  });
-
-}
-
-
+import reqAddEvent from '../requests/userRequests/reqAddEvent';
 
 class Addevent extends Component {
 
@@ -47,9 +22,14 @@ class Addevent extends Component {
   }
 
   handleSubmit(values) {
-    sendEvent(values).then( () => {
+
+    const token = getCookie('token');
+    const dispatch = this.props.dispatch;
+
+    reqAddEvent(values, token, dispatch).then(() => {
       this.setState({eventSent: true});
     });
+
   }
 
   render () {
@@ -71,4 +51,4 @@ class Addevent extends Component {
 
 }
 
-export default Addevent;
+export default connect()(Addevent);

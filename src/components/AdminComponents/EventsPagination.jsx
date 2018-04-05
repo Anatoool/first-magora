@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import GetAllEvents from '../../reducer-actions/getAllEvents';
+import GetAllEvents from '../../actions/getAllEvents';
 
 class EventsPagination extends Component {
 

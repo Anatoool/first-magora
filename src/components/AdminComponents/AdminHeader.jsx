@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import deleteCookie from '../cookie/deleteCookie';
+import deleteCookie from '../../cookie/deleteCookie';
 import { connect } from 'react-redux';
 
 class AdminHeader extends Component {

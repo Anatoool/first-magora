@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import GetUsers from '../../reducer-actions/getUsers';
+import GetUsers from '../../actions/getUsers';
 
 import User from './User';
 import Pagination from './Pagination';

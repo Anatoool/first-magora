@@ -21,6 +21,6 @@ export default function userRoutes(app) {
 
   app.post('/profile/get', getProfileFromToken);//Получение профайла
 
-  app.put('/user/profile/edit', userEditProfile);//Редактирование профайла
+  app.put('/api/user/profile', userEditProfile);//Редактирование профайла
 
 }

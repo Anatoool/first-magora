@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import GetAllEvents from '../../reducer-actions/getAllEvents';
+import GetAllEvents from '../../actions/getAllEvents';
 import AdminEvent from './AdminEvent';
-
 
 class AdminEventsTable extends Component {
 
@@ -15,7 +14,7 @@ class AdminEventsTable extends Component {
 
   getEvents() {
     const namefilter = (this.props.namefilter === '""' ? '' : this.props.namefilter);
-    console.log('getEvents', this.props.sortfield, this.props.direction);
+  
     this.props.onGetEvents(this.props.page,
                            this.props.sortfield,
                            this.props.direction,

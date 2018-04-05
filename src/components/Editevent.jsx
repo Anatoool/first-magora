@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 
 import { Redirect } from 'react-router-dom';
 
-import GetEvent from '../reducer-actions/getEvent';
+import GetEvent from '../actions/getEvent';
 
+import reqEditEvent from '../requests/userRequests/reqEditEvent';
 
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -14,7 +15,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import '../../styles/common/homepage.scss';
 
-const updateEvent = (values) => {
+/*const updateEvent = (values) => {
 
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -35,9 +36,7 @@ const updateEvent = (values) => {
     xhr.send(body);
   });
 
-}
-
-
+}*/
 
 class Editevent extends Component {
 
@@ -49,7 +48,8 @@ class Editevent extends Component {
   }
 
   handleSubmit(values) {
-    updateEvent(values).then( () => {
+    const dispatch = this.props.returnDispatch();
+    reqEditEvent(values, dispatch).then( () => {
       this.setState({eventSent: true});
     });
   }
@@ -101,6 +101,7 @@ export default connect(
   dispatch => ({
     onGetEvent: (id, editevent) => {
       dispatch(GetEvent(id, editevent));
-    }
+    },
+    returnDispatch: () => dispatch
   })
 )(Editevent);

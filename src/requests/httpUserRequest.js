@@ -3,7 +3,7 @@ import deleteCookie from '../cookie/deleteCookie';
 export default function httpUserRequest (url, init, dispatch) {
 
   init.credentials = 'include';
-  
+
   return fetch(url, init).then(function(response) {
     return response.json();
   }).then(function(response) {
@@ -17,4 +17,5 @@ export default function httpUserRequest (url, init, dispatch) {
   }).catch(err => {
     alert(err);
   });
+
 }

@@ -5,36 +5,12 @@ import UserHeader from '../UserHeader';
 import ProfileCard from './ProfileCard';
 import EditProfileForm from './EditProfileForm';
 
-import getCookie from '../cookie/getCookie';
+import getCookie from '../../cookie/getCookie';
 
+import httpUserRequest from '../../requests/httpUserRequest';
 
 import '../../../styles/common/homepage.scss';
 import './profile.scss';
-
-const sendProfile = (values) => {
-
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-
-    const valuesJSON = JSON.stringify(values);
-    const token = getCookie('token');
-
-    var body = {
-      profile: valuesJSON,
-      token: token
-    };
-
-    body = JSON.stringify(body);
-
-    xhr.open('PUT', '/user/profile/edit');
-
-    xhr.onload = () => resolve(xhr.responseText);
-    xhr.onerror = () => reject(xhr.statusText);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(body);
-  });
-
-}
 
 class Profile extends Component {
 
@@ -50,9 +26,25 @@ class Profile extends Component {
   }
 
   handleSubmit(values) {
-    sendProfile(values).then( (response) => {
-      //this.setState({eventSent: true});
-      const res = JSON.parse(response);
+
+    const token = getCookie('token');
+    const valuesJSON = JSON.stringify(values);
+
+    const body = { profile: valuesJSON, token: token };
+
+    var reqHeaders = new Headers();
+    reqHeaders.append("Content-Type", 'application/json');
+
+    const URL = '/api/user/profile';
+    const init = {
+      method: 'PUT',
+      headers: reqHeaders,
+      body: JSON.stringify(body)
+    };
+
+    const dispatch = this.props.returnDispatch();
+
+    httpUserRequest(URL, init, dispatch).then((res) => {
       if (res.status === 'updated') {
         const profile = {
           login: this.props.userProfile.login,
@@ -95,6 +87,7 @@ export default connect(
   dispatch => ({
     onEditProfile: (profile) => {
       dispatch({ type: 'EDIT_PROFILE', payload: profile });
-    }
+    },
+    returnDispatch: () => dispatch
   })
 )(Profile);
