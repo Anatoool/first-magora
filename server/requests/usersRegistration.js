@@ -1,4 +1,4 @@
-import { addUser } from '../../database/db';
+import { addUser } from '../../database/dbUser';
 
 const usersRegistration = function (req, res) {
 

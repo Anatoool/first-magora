@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import dbAdminEditEvent from '../../database/dbAdminEditEvent';
+import { dbAdminEditEvent } from '../../database/dbEvent';
 
 const adminEditEvent = function (req, res) {
 

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import dbGetEvents from '../../database/dbGetEvents';
+import { dbGetEvents } from '../../database/dbEvent';
 
 const userGetEvents = function (req, res) {
 
@@ -15,7 +15,7 @@ const userGetEvents = function (req, res) {
 
          const page = req.query.page;
          const pageSize = req.query.pageSize;
-         const field = req.query.sort[0];         
+         const field = req.query.sort[0];
 
          dbGetEvents(decoded.login, page, pageSize, field, (docs, countEvents) => {
            res.json({events: docs, count: countEvents});

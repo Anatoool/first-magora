@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import dbGetAllEvents from '../../database/dbGetAllEvents';
+import { dbGetAllEvents } from '../../database/dbEvent';
 
 const adminGetEvents = function (req, res) {
 

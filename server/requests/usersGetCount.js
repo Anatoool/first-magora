@@ -1,4 +1,4 @@
-import dbGetUsersCount from '../../database/dbGetUsersCount';
+import { dbGetUsersCount } from '../../database/dbUser';
 
 const usersGetCount = function (req, res) {
 

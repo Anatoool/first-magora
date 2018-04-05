@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import dbAdminDeleteUser from '../../database/dbAdminDeleteUser';
+import { dbAdminDeleteUser } from '../../database/dbUser';
 
 const adminDeleteUser = function (req, res) {
 

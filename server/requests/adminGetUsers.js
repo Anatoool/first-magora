@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import dbGetUsers from '../../database/dbGetUsers';
+import { dbGetUsers } from '../../database/dbUser';
 
 const adminGetUsers = function (req, res) {
 

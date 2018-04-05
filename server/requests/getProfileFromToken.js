@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { findUser } from '../../database/db';
+import { findUser } from '../../database/dbUser';
 
 const getProfileFromToken = function (req, res) {
 

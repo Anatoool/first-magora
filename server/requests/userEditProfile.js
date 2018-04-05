@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import dbEditProfile from '../../database/dbEditProfile';
+import { dbEditProfile } from '../../database/dbUser';
 
 const userEditProfile = function (req, res) {
   var token = req.body.token;
@@ -34,7 +34,7 @@ const userEditProfile = function (req, res) {
          message: 'No token provided.'
      });
    }
-  
+
 };
 
 export default userEditProfile;
