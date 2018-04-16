@@ -10,7 +10,10 @@ var userScheme = new Schema({
     password: String,
     email: String,
     name: String,
-    role: String
+    role: String,
+    achievements: {
+      firstEvent: Boolean
+    }
   },
   { versionKey: false }
 );

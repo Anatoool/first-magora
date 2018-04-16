@@ -7,6 +7,8 @@ import {
 
 //import App from './app';
 
+import Socket from './components/Socket/Socket.jsx';
+
 import Notfound from './components/Notfound';
 import LSForm from './components/LSForm';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -26,15 +28,23 @@ import 'normalize.css';
 
 
 const Routes = () => (
+
   <BrowserRouter>
+    <div>
+
+      <Switch>
+        <Route path='/homepage/*' component={Socket}/>
+        <Route path='/addevent' component={Socket}/>
+        <Route path='/editevent/*' component={Socket}/>
+        <Route path='/profile' component={Socket}/>
+        <Route path='/admin/*' component={Socket}/>
+      </Switch>
 
       <Switch>
           <Route exact path="/" component={LSForm}/>
-
           <AdminProtectedRoute path="/admin/events-:page-:sortfield-:direction-:deleted-:namefilter" component={Admin}/>
           <AdminProtectedRoute path="/admin/users-:page-:deleted-:namefilter" component={Users}/>
           <AdminProtectedRoute path="/admin/event/:id" component={AdminEditevent}/>
-
 
           <ProtectedRoute path="/homepage/:number" component={Homepage}/>
           <ProtectedRoute path="/addevent" component={Addevent}/>
@@ -43,6 +53,7 @@ const Routes = () => (
           <Route path="*" component={Notfound}/>
       </Switch>
 
+    </div>
   </BrowserRouter>
 );
 

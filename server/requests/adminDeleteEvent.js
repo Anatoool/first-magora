@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 import { dbAdminDeleteEvent } from '../../database/dbEvent';
 
-const adminDeleteEvent = function (req, res) {
+const adminDeleteEvent = function (req, res, mySocket) {
 
   var token = req.cookies.token;
 
@@ -25,7 +25,7 @@ const adminDeleteEvent = function (req, res) {
                      if (error) {
                        console.log(error);
                      } else {
-                       console.log(result);
+                       mySocket.deleteEvent(result.name, result.user);                       
                        res.status(200).json({status: 'deleted'});
                      }
                    });

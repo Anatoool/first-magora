@@ -6,7 +6,7 @@ import adminGetUsers from '../requests/adminGetUsers';
 import adminDeleteUser from '../requests/adminDeleteUser';
 import adminUndeleteUser from '../requests/adminUndeleteUser';
 
-export default function adminRoutes(app) {
+export default function adminRoutes(app, mySocket) {
 
 //-----Работа с пользователями
 
@@ -31,6 +31,8 @@ export default function adminRoutes(app) {
   app.put('/api/admin/events/:id', adminEditEvent);
 
   //Удаление события администратором
-  app.delete('/api/admin/events/:id', adminDeleteEvent);
+  app.delete('/api/admin/events/:id', (req, res) => {
+    adminDeleteEvent(req, res, mySocket);
+  });
 
 }

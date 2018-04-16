@@ -9,7 +9,8 @@ function addUser(login, password, email, callback) {
       password: password,
       email: email,
       role: 'user',
-      name: ''
+      name: '',
+      achievements: {firstEvent: false}
   });
 
   user.save()
@@ -78,6 +79,10 @@ const dbGetUsers = (page, pageSize, deleted, login, callback) => {
 
 }
 
+const dbSetFirstEventAchievement = (login, callback) => {
+  User.updateOne({login: login}, {$set: {'achievements': {'firstEvent': true}}}, callback);
+}
+
 export {
   addUser,
   findUser,
@@ -85,5 +90,6 @@ export {
   dbGetUsers,
   dbAdminUndeleteUser,
   dbEditProfile,
-  dbAdminDeleteUser
+  dbAdminDeleteUser,
+  dbSetFirstEventAchievement
 };

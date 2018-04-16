@@ -40,7 +40,7 @@ function dbEditEvent(event, login, id, callback) {
 
 function dbAdminDeleteEvent(id, callback) {
 
-  Event.update({_id: id}, { deleted: true }, callback);
+  Event.findOneAndUpdate({_id: id}, { deleted: true }, callback);
 
 }
 
