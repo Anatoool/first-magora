@@ -25,16 +25,26 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(`${path.normalize(__dirname + '/../')}/public`));
 
+app.set('socket', mySocket);
 
 requestMiddlewares(app);
 generalRoutes(app);
-adminRoutes(app, mySocket);
-userRoutes(app, mySocket);
+adminRoutes(app);
+userRoutes(app);
 
 //Загрузка основного файла
 app.get('*', (request, response) => {
   response.sendFile(path.resolve(path.normalize(__dirname + '/../'), 'public', 'index.html'));
 });
+
+/*setInterval(() => {
+  const users = mySocket.getConnectUsers();
+  for(var key in users) {
+    console.log(users[key] + ': ' + key);
+
+  }
+console.log('----------------------------------------');
+}, 5000);*/
 
 io.listen(app.listen(config.port));
 console.log(`server started on port ${config.port}`);

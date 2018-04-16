@@ -17,6 +17,7 @@ import Admin from './components/AdminComponents/Admin';
 import AdminProtectedRoute from './components/AdminComponents/AdminProtectedRoute';
 import AdminEditevent from './components/AdminComponents/AdminEditevent';
 import Users from './components/AdminComponents/Users';
+import Notifications from './components/AdminComponents/Notifications';
 
 import Homepage from './components/Homepage';
 import Addevent from './components/Addevent';
@@ -37,7 +38,7 @@ const Routes = () => (
         <Route path='/addevent' component={Socket}/>
         <Route path='/editevent/*' component={Socket}/>
         <Route path='/profile' component={Socket}/>
-        <Route path='/admin/*' component={Socket}/>
+        
       </Switch>
 
       <Switch>
@@ -45,6 +46,7 @@ const Routes = () => (
           <AdminProtectedRoute path="/admin/events-:page-:sortfield-:direction-:deleted-:namefilter" component={Admin}/>
           <AdminProtectedRoute path="/admin/users-:page-:deleted-:namefilter" component={Users}/>
           <AdminProtectedRoute path="/admin/event/:id" component={AdminEditevent}/>
+          <AdminProtectedRoute path="/admin/notifications" component={Notifications}/>
 
           <ProtectedRoute path="/homepage/:number" component={Homepage}/>
           <ProtectedRoute path="/addevent" component={Addevent}/>

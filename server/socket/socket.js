@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken';
+import { dbGetNotifications, dbDeleteNotifications, dbAddNotification } from '../../database/dbNotification';
 
 class Socket {
 
   constructor(io) {
     this.io = io;
-    this.connect_users = [];
+    this.connect_users = {};
     this.startSocket();
   }
 
@@ -12,7 +13,7 @@ class Socket {
 
     this.io.sockets.on("connection", (socket) => {
 
-      var token = socket.request.headers.cookie.token
+      var token = socket.request.headers.cookie.token;
 
        if (!token) {
          return false;
@@ -22,30 +23,101 @@ class Socket {
          if (err) {
            return false;
          }
-         this.connect_users.push({login: decoded.login, id: socket.id});
-         //this.io.to(socket.id).emit('Start_Chat');
+
+         this.emitOfflineNotifications(decoded.login, socket.id);
+         this.connect_users[socket.id] = decoded.login;
+
        });
 
       socket.on('disconnect', () => {
-          this.connect_users = this.connect_users.filter(user => user.id !== socket.id);
+          delete this.connect_users[socket.id];
+      });
+
+      socket.on("Admin_notification_to_one", (username, notification) => {
+        this.adminNotificationToOne(username, notification, socket);
       });
 
     });
 
   }
 
+  emitOfflineNotifications(login, id) {
+
+    dbGetNotifications(login, (docs) => {
+
+      const count = docs.length;
+
+      if (count === 0) {
+        return false;
+      }
+
+      for (let i = 0; i < count; i++) {
+        this.io.to(id).emit(docs[i].type, docs[i].message);
+      }
+
+      dbDeleteNotifications(login);
+
+    });
+
+  }
+
   deleteEvent(eventName, user) {
-    const emitUsers = this.connect_users.filter(element => element.login === user);
-    for (let i = 0, count = emitUsers.length; i < count; i++) {
-      this.io.to(emitUsers[i].id).emit("Delete_Event", eventName);
+
+    var countEnabledUsers = 0;//Количество доступных подключений пользователей. Если оно будет равно 0, то нужно кинуть нотификашку в БД.
+
+    for(var key in this.connect_users) {
+      if (this.connect_users[key] === user) {
+        this.io.to(key).emit("Delete_Event", eventName);
+        countEnabledUsers++;
+      }
     }
+
+    if (countEnabledUsers === 0) {
+      dbAddNotification(user, "Delete_Event", eventName);
+    }
+
   }
 
   firstEventAchievement(login) {
-    const emitUsers = this.connect_users.filter(element => element.login === login);
-    for (let i = 0, count = emitUsers.length; i < count; i++) {
-      this.io.to(emitUsers[i].id).emit("First_event_achievement");
+
+    for(var key in this.connect_users) {
+      if (this.connect_users[key] === login) {
+        this.io.to(key).emit("First_event_achievement");
+      }
     }
+
+  }
+
+  adminNotificationToOne(username, notification, socket) {
+
+    const token = socket.request.headers.cookie.token;
+    if (!token) {
+      return false;
+    }
+
+    jwt.verify(token, 'my-secret', (err, decoded) => {
+      if (err) {
+        return false;
+      }
+
+      if (decoded.role !== 'admin') {
+        return false;
+      }
+
+      var countEnabledUsers = 0;
+
+      for(var key in this.connect_users) {
+        if (this.connect_users[key] === username) {
+          this.io.to(key).emit("Admin_Notification", notification);
+          countEnabledUsers++;
+        }
+      }
+
+      if (countEnabledUsers === 0) {
+        dbAddNotification(username, "Admin_Notification", notification);
+      }
+
+    });
   }
 
   getConnectUsers() {

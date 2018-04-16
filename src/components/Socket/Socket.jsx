@@ -18,6 +18,10 @@ class Socket extends Component {
     this.socket.on("First_event_achievement", () => {
                   this.addPushFirstEventAchievement();
               });
+
+    this.socket.on("Admin_Notification", (notification) => {
+                  this.addPushAdminNotification(notification);
+              });
   }
 
   addPushDeleteEvent(eventName) {
@@ -39,6 +43,18 @@ class Socket extends Component {
     newArr.push(newPush);
     this.setState({pushArray: newArr});
   }
+
+  addPushAdminNotification (notification) {
+    let newArr = this.state.pushArray.slice();
+    let newPush = {
+      type: 'Сообщение от администратора!',
+      message: notification
+    }
+    newArr.push(newPush);
+    this.setState({pushArray: newArr});
+  }
+
+
 
   pushesRender() {
     var arr = [];

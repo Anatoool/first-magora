@@ -5,7 +5,7 @@ import userEditProfile from '../requests/userEditProfile';
 import userEditEvent from '../requests/userEditEvent';
 import userGetEvent from '../requests/userGetEvent';
 
-export default function userRoutes(app, mySocket) {
+export default function userRoutes(app) {
 
 //-----Работа с событиями
 
@@ -14,7 +14,7 @@ export default function userRoutes(app, mySocket) {
   app.get('/api/user/events/:id', userGetEvent);//Получение единственного события
 
   app.post('/user/event/add', (req, res) => {
-    userAddEvent(req, res, mySocket);
+    userAddEvent(req, res, app.get('socket'));
   });//Добавление события
 
   app.put('/api/user/events/:id', userEditEvent);//Редактирование события

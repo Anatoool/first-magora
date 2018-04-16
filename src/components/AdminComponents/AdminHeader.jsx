@@ -18,6 +18,9 @@ class AdminHeader extends Component {
         <li className="nav-item">
           <Link className="nav-link" to='/admin/users-1-true-""'>Users</Link>
         </li>
+        <li className="nav-item">
+          <Link className="nav-link" to='/admin/notifications'>Notifications</Link>
+        </li>
       </ul>);
     } else if (this.props.page === 'users') {
       return (<ul className="navbar-nav">
@@ -27,6 +30,21 @@ class AdminHeader extends Component {
         <li className="nav-item active">
           <Link className="nav-link" to='/admin/users-1-true-""'>Users</Link>
         </li>
+        <li className="nav-item">
+          <Link className="nav-link" to='/admin/notifications'>Notifications</Link>
+        </li>
+      </ul>);
+    } else if (this.props.page === 'notifications') {
+      return (<ul className="navbar-nav">
+        <li className="nav-item">
+          <Link className="nav-link" to='/admin/events-1-name-up-true-""'>Events</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to='/admin/users-1-true-""'>Users</Link>
+        </li>
+        <li className="nav-item active">
+          <Link className="nav-link" to='/admin/notifications'>Notifications</Link>
+        </li>
       </ul>);
     } else if (this.props.page === 'none') {
       return (<ul className="navbar-nav">
@@ -35,6 +53,9 @@ class AdminHeader extends Component {
         </li>
         <li className="nav-item">
           <Link className="nav-link" to='/admin/users-1-true-""'>Users</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to='/admin/notifications'>Notifications</Link>
         </li>
       </ul>);
     }
