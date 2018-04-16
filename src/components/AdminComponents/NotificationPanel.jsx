@@ -10,7 +10,7 @@ class NotificationPanel extends Component {
   constructor(props) {
     super(props);
     this.socket = io();
-    this.state = {gender: 'male'};
+    this.state = {gender: 'male', defaultTab: "one"};
   }
 
   emitToOneNotification() {
@@ -28,11 +28,15 @@ class NotificationPanel extends Component {
     this.setState({gender: 'female'});
   }
 
+  emitGenderNotification() {
+
+  }
+
   render () {
     return (
       <Tabs
-        defaultTab="one"
-        onChange={(tabId) => { console.log(tabId) }}
+        defaultTab = { this.state.defaultTab }
+        onChange={(tabId) => { this.setState({defaultTab: tabId}) }}
       >
         <TabList>
           <Tab tabFor="one">Уведомление пользователю</Tab>
@@ -63,7 +67,7 @@ class NotificationPanel extends Component {
                 <input type="radio" name="gender" value="female" id="radio-female"/>
                 <label htmlFor="radio-female">Жен.</label>
               </div>
-              <button className="btn btn-primary notification-button" onClick={this.emitToOneNotification.bind(this)}>Emit notification</button>
+              <button className="btn btn-primary notification-button" onClick={this.emitGenderNotification.bind(this)}>Emit notification</button>
         </TabPanel>
 
       </Tabs>
